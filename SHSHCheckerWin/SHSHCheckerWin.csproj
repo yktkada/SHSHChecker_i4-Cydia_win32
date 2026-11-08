@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>SHSHCheckerI4</AssemblyName>
+    <RootNamespace>SHSHCheckerWin</RootNamespace>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <ApplicationDefaultFont>Microsoft YaHei UI, 9pt</ApplicationDefaultFont>
+    <ApplicationVisualStyles>true</ApplicationVisualStyles>
+    <ApplicationUseCompatibleTextRendering>false</ApplicationUseCompatibleTextRendering>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <Product>SHSH Checker (i4 / Cydia)</Product>
+    <AssemblyTitle>SHSH Checker（i4 / Cydia）</AssemblyTitle>
+    <Company>SHSHChecker</Company>
+    <Copyright>Copyright (C) 2026 yktkada (GPL-3.0-or-later)</Copyright>
+    <Version>0.7.4</Version>
+    <FileVersion>0.7.4.0</FileVersion>
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+
+</Project>
+
+
+
