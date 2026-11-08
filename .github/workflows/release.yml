@@ -1,0 +1,92 @@
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: '要发布的 tag（例如 v0.7.4），需先存在'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Build & publish single-file exe
+        shell: pwsh
+        run: |
+          dotnet publish SHSHCheckerWin/SHSHCheckerWin.csproj -c Release -r win-x64 `
+            --self-contained false -p:PublishSingleFile=true -p:DebugType=None -p:DebugSymbols=false -o out
+          if (-not (Test-Path out/SHSHCheckerI4.exe)) { throw 'publish 未产出 exe' }
+
+      - name: Collect version & checksums
+        shell: pwsh
+        id: meta
+        run: |
+          $exe = 'out/SHSHCheckerI4.exe'
+          $info = (Get-Item $exe).VersionInfo
+          $fileVersion = if ($info.FileVersion) { $info.FileVersion } else { 'unknown' }
+          $tag = if ('${{ github.ref_type }}' -eq 'tag') { '${{ github.ref_name }}' } else { '${{ inputs.tag }}' }
+
+          $hash = (Get-FileHash $exe -Algorithm SHA256).Hash
+          $size = (Get-Item $exe).Length
+          "SHSHCheckerI4.exe  SHA256:$hash  $size bytes" | Out-File -Encoding utf8 out/SHA256SUMS.txt
+
+          "tag=$tag" >> $env:GITHUB_OUTPUT
+          "version=$fileVersion" >> $env:GITHUB_OUTPUT
+          "sha256=$hash" >> $env:GITHUB_OUTPUT
+          "size=$size" >> $env:GITHUB_OUTPUT
+
+      - name: Write release notes
+        shell: pwsh
+        run: |
+          @"
+          SHSH Checker (i4 / Cydia) — Windows 单文件版
+
+          - 文件：``SHSHCheckerI4.exe``
+          - 版本：${{ steps.meta.outputs.version }}
+          - SHA256：``${{ steps.meta.outputs.sha256 }}``
+          - 大小：${{ steps.meta.outputs.size }} 字节
+
+          ## 运行要求
+
+          需要 **.NET 10 Desktop Runtime**（Windows 不自带）：
+          https://dotnet.microsoft.com/download/dotnet/10.0 → Desktop Runtime 10.x → Windows x64
+
+          未做代码签名，首次运行可能出现 SmartScreen 提示。
+
+          ## 说明
+
+          - 支持按 ECID 查询/下载 爱思(i4) 与 Cydia 的 SHSH，现代设备保存为 ``.shsh2``
+          - 支持本地 SHSH 上传到爱思服务器（多选、文件夹、UNC 网络共享）
+          - 32-bit（iOS 11 及以下）文件上传后服务器可能精简内容，**请务必保留本地原件**
+          - 仅用于备份自己的设备；依赖第三方服务，可能随时失效
+          "@ | Out-File -Encoding utf8 RELEASE_NOTES.md
+
+      - name: Create GitHub Release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ steps.meta.outputs.tag }}" `
+            out/SHSHCheckerI4.exe `
+            out/SHA256SUMS.txt `
+            --title "SHSH Checker ${{ steps.meta.outputs.tag }}" `
+            --notes-file RELEASE_NOTES.md `
+            --verify-tag
