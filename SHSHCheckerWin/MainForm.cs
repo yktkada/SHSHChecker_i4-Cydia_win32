@@ -72,6 +72,7 @@ public sealed partial class MainForm : Form
     public MainForm()
     {
         Text = "SHSH Checker（i4 / Cydia）";
+        Icon = AppIcon.Load();
         StartPosition = FormStartPosition.CenterScreen;
         ClientSize = new Size(1040, 742);
         MinimumSize = new Size(900, 660);
@@ -833,6 +834,7 @@ public sealed partial class MainForm : Form
     }
 
 }
+
 
 
 
