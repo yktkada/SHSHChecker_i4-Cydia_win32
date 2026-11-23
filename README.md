@@ -1,4 +1,8 @@
-# SHSH Checker（WinForms / Win32）
+<p align="center">
+  <img src="assets/icon.png" width="96" alt="SHSH Checker">
+</p>
+
+<h1 align="center">SHSH Checker（WinForms / Win32）</h1>
 
 原生 Windows 桌面版 SHSH 工具：可以按 ECID 查询并保存 **爱思（i4）** 与 **Cydia** 的 SHSH 备份，
 支持现代 `shsh2`，也可以把本地 SHSH 上传到爱思服务器。
@@ -131,5 +135,6 @@ GNU General Public License for more details.
 ```
 
 完整条款见 [LICENSE](LICENSE)。
+
 
 
