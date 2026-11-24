@@ -18,11 +18,15 @@
     <AssemblyTitle>SHSH Checker（i4 / Cydia）</AssemblyTitle>
     <Company>SHSHChecker</Company>
     <Copyright>Copyright (C) 2026 yktkada (GPL-3.0-or-later)</Copyright>
-    <Version>0.7.6</Version>
-    <FileVersion>0.7.6.0</FileVersion>
+    <Version>0.8.0</Version>
+    <FileVersion>0.8.0.0</FileVersion>
     <InvariantGlobalization>false</InvariantGlobalization>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(EnglishBuild)' == 'true'">
+    <DefineConstants>$(DefineConstants);ENGLISH_LEGACY</DefineConstants>
+    <AssemblyName>SHSHCheckerI4-en</AssemblyName>
+  </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="app.ico">
       <LogicalName>SHSHCheckerWin.app.ico</LogicalName>
@@ -30,6 +34,8 @@
   </ItemGroup>
 
 </Project>
+
+
 
 
 

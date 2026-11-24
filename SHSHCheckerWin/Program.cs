@@ -12,7 +12,11 @@ internal static class Program
     private static void Main()
     {
         SetCurrentProcessExplicitAppUserModelID("yktkada.SHSHCheckerI4");
+#if ENGLISH_LEGACY
+        Strings.ForceEnglish = true;
+#endif
         ApplicationConfiguration.Initialize();
         Application.Run(new MainForm());
     }
 }
+

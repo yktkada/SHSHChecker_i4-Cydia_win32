@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: '要发布的 tag（例如 v0.7.4），需先存在'
+        description: 'Tag to release (e.g. v0.8.0), must already exist'
         required: true
 
 permissions:
@@ -28,57 +28,75 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
-      - name: Build & publish single-file exe
+      - name: Publish 4 variants
         shell: pwsh
         run: |
-          dotnet publish SHSHCheckerWin/SHSHCheckerWin.csproj -c Release -r win-x64 `
-            --self-contained false -p:PublishSingleFile=true -p:DebugType=None -p:DebugSymbols=false -o out
-          if (-not (Test-Path out/SHSHCheckerI4.exe)) { throw 'publish 未产出 exe' }
+          $proj = 'SHSHCheckerWin/SHSHCheckerWin.csproj'
+          $common = @('-c', 'Release', '-r', 'win-x64', '-p:PublishSingleFile=true', '-p:DebugType=None', '-p:DebugSymbols=false')
 
-      - name: Collect version & checksums
-        shell: pwsh
+          # 中文 · 框架依赖（~600 KB，推荐）
+          dotnet publish $proj @common --self-contained false -o out/zh-fd
+          # 中文 · 自包含（免装运行时，压缩后 ~50 MB）
+          dotnet publish $proj @common --self-contained true -p:EnableCompressionInSingleFile=true -o out/zh-sc
+          # 英文精简版 · 框架依赖（推荐）
+          dotnet publish $proj @common --self-contained false -p:EnglishBuild=true -o out/en-fd
+          # 英文精简版 · 自包含
+          dotnet publish $proj @common --self-contained true -p:EnableCompressionInSingleFile=true -p:EnglishBuild=true -o out/en-sc
+
+          New-Item -ItemType Directory -Force out/files | Out-Null
+          Copy-Item out/zh-fd/SHSHCheckerI4.exe        out/files/SHSHCheckerI4.exe
+          Copy-Item out/zh-sc/SHSHCheckerI4.exe        out/files/SHSHCheckerI4-selfcontained.exe
+          Copy-Item out/en-fd/SHSHCheckerI4-en.exe     out/files/SHSHCheckerI4-en.exe
+          Copy-Item out/en-sc/SHSHCheckerI4-en.exe     out/files/SHSHCheckerI4-en-selfcontained.exe
+          Get-ChildItem out/files | ForEach-Object { '{0}  {1:N0} bytes' -f $_.Name, $_.Length }
+
+      - name: Checksums & version
         id: meta
+        shell: pwsh
         run: |
-          $exe = 'out/SHSHCheckerI4.exe'
-          $info = (Get-Item $exe).VersionInfo
-          $fileVersion = if ($info.FileVersion) { $info.FileVersion } else { 'unknown' }
+          $lines = foreach ($f in Get-ChildItem out/files -Filter *.exe) {
+            $hash = (Get-FileHash $f.FullName -Algorithm SHA256).Hash
+            "$($f.Name)  SHA256:$hash  $($f.Length) bytes"
+          }
+          $lines | Out-File -Encoding utf8 out/files/SHA256SUMS.txt
+          $exe = Get-Item out/files/SHSHCheckerI4.exe
           $tag = if ('${{ github.ref_type }}' -eq 'tag') { '${{ github.ref_name }}' } else { '${{ inputs.tag }}' }
-
-          $hash = (Get-FileHash $exe -Algorithm SHA256).Hash
-          $size = (Get-Item $exe).Length
-          "SHSHCheckerI4.exe  SHA256:$hash  $size bytes" | Out-File -Encoding utf8 out/SHA256SUMS.txt
-
           "tag=$tag" >> $env:GITHUB_OUTPUT
-          "version=$fileVersion" >> $env:GITHUB_OUTPUT
-          "sha256=$hash" >> $env:GITHUB_OUTPUT
-          "size=$size" >> $env:GITHUB_OUTPUT
+          "version=$($exe.VersionInfo.FileVersion)" >> $env:GITHUB_OUTPUT
 
       - name: Write release notes
         shell: pwsh
         run: |
           @"
-          SHSH Checker (i4 / Cydia) — Windows 单文件版
+          SHSH Checker — Windows builds (Chinese + English)
 
-          - 文件：``SHSHCheckerI4.exe``
-          - 版本：${{ steps.meta.outputs.version }}
-          - SHA256：``${{ steps.meta.outputs.sha256 }}``
-          - 大小：${{ steps.meta.outputs.size }} 字节
+          | File | Size | Requires | Recommended |
+          |---|---|---|---|
+          | ``SHSHCheckerI4.exe`` | ~600 KB | .NET 10 Desktop Runtime | ⭐ **recommended** |
+          | ``SHSHCheckerI4-selfcontained.exe`` | ~50 MB | nothing | |
+          | ``SHSHCheckerI4-en.exe`` | ~600 KB | .NET 10 Desktop Runtime | ⭐ **recommended** |
+          | ``SHSHCheckerI4-en-selfcontained.exe`` | ~50 MB | nothing | |
 
-          ## 运行要求
+          Download the small (few hundred KB) build unless you cannot install the runtime.
+          Runtime: https://dotnet.microsoft.com/download/dotnet/10.0 → Desktop Runtime 10.x → Windows x64
 
-          需要 **.NET 10 Desktop Runtime**（Windows 不自带）：
-          https://dotnet.microsoft.com/download/dotnet/10.0 → Desktop Runtime 10.x → Windows x64
+          ## Features
 
-          未做代码签名，首次运行可能出现 SmartScreen 提示。
+          - **Chinese build**: full version — i4 + Cydia query, download, modern ``.shsh2``, SHSH upload to i4
+          - **English build (`-en`)**: legacy 32-bit devices only (A4–A6X, iOS 11 and earlier), Cydia query + download
+            (keeps i4 download path, drops i4 query and SHSH upload; iPhone 5c excluded)
 
-          ## 说明
+          Both builds save ``.shsh`` / ``.shsh2`` and keep the same device catalog and UI.
 
-          - 支持按 ECID 查询/下载 爱思(i4) 与 Cydia 的 SHSH，现代设备保存为 ``.shsh2``
-          - 支持本地 SHSH 上传到爱思服务器（多选、文件夹、UNC 网络共享）
-          - 32-bit（iOS 11 及以下）文件上传后服务器可能精简内容，**请务必保留本地原件**
-          - 仅用于备份自己的设备；依赖第三方服务，可能随时失效
+          ## Notes
 
-          License: GPL-3.0-or-later（源码见本仓库）
+          - Unsigned binary; SmartScreen may warn on first run.
+          - Legacy (iOS 11 and earlier) SHSH may be trimmed by the i4 server — always keep your local originals.
+          - Third-party services may change or break at any time.
+
+          License: GPL-3.0-or-later (source in this repository)
+
+          Version: ${{ steps.meta.outputs.version }}
           "@ | Out-File -Encoding utf8 RELEASE_NOTES.md
 
       - name: Create GitHub Release
@@ -87,9 +105,11 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release create "${{ steps.meta.outputs.tag }}" `
-            out/SHSHCheckerI4.exe `
-            out/SHA256SUMS.txt `
+            out/files/SHSHCheckerI4.exe `
+            out/files/SHSHCheckerI4-selfcontained.exe `
+            out/files/SHSHCheckerI4-en.exe `
+            out/files/SHSHCheckerI4-en-selfcontained.exe `
+            out/files/SHA256SUMS.txt `
             --title "SHSH Checker ${{ steps.meta.outputs.tag }}" `
             --notes-file RELEASE_NOTES.md `
             --verify-tag
-

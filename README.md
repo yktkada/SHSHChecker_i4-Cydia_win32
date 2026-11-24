@@ -11,6 +11,21 @@
 
 ---
 
+## 下载哪个版本
+
+| 文件 | 大小 | 需要 | 推荐 |
+|---|---|---|---|
+| `SHSHCheckerI4.exe` | ~600 KB | .NET 10 Desktop Runtime | ⭐ |
+| `SHSHCheckerI4-selfcontained.exe` | ~50 MB | 无 | |
+| `SHSHCheckerI4-en.exe` | ~600 KB | .NET 10 Desktop Runtime | ⭐ |
+| `SHSHCheckerI4-en-selfcontained.exe` | ~50 MB | 无 | |
+
+- **推荐几百 KB 的版本**：体积小、启动快，只需装一次 .NET 10 Desktop Runtime
+- 50 MB 自包含版：不想装运行时的人用（已启用单文件压缩，否则约 110 MB）
+- **英文版（`-en`）**：仅 32-bit 老设备（A4–A6X / iOS 11 及以下），只保留 Cydia 查询 + 下载（保留 i4 下载路径，去掉 i4 查询与上传，排除 iPhone 5c）
+
+---
+
 ## 功能
 
 - **ECID 输入**：十六进制（`0011AABBCCDDEEFF`、`0x00AABBCCDD`）或十进制（`1234567890123`，13 位以上自动识别），实时显示两种写法
@@ -135,6 +150,7 @@ GNU General Public License for more details.
 ```
 
 完整条款见 [LICENSE](LICENSE)。
+
 
 
 
