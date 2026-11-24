@@ -71,7 +71,7 @@ public sealed partial class MainForm : Form
 
     public MainForm()
     {
-        Text = "SHSH Checker（i4 / Cydia）";
+        Text = Strings.Get("K173");
         Icon = AppIcon.Load();
         StartPosition = FormStartPosition.CenterScreen;
         ClientSize = new Size(1040, 742);
@@ -79,7 +79,11 @@ public sealed partial class MainForm : Form
         Font = new Font("Microsoft YaHei UI", 9F);
 
         BuildUi();
+#if ENGLISH_LEGACY
+        AcceptButton = _cydiaButton;
+#else
         AcceptButton = _queryButton;
+#endif
 
         _ecidBox.TextChanged += (_, _) => UpdateEcidPreview();
         _modelCombo.SelectedIndexChanged += (_, _) => OnGroupChanged();
@@ -223,7 +227,7 @@ public sealed partial class MainForm : Form
 
             if (_modelCombo.SelectedItem is DeviceGroup group)
             {
-                _productTypeCombo.Items.Add(new ProductTypeChoice("全部 ProductType", null));
+                _productTypeCombo.Items.Add(new ProductTypeChoice(Strings.Get("K120"), null));
 
                 foreach (var variant in group.Variants.Where(v => DeviceCatalog.IsVariantVisible(v, _arm64Check.Checked, _arm64eCheck.Checked)))
                 {
@@ -251,7 +255,7 @@ public sealed partial class MainForm : Form
 
         if (_modelCombo.SelectedItem is not DeviceGroup group)
         {
-            _modelHint.Text = "没有可选机型";
+            _modelHint.Text = Strings.Get("K121");
             _modelHint.ForeColor = Color.Firebrick;
             _toolTip.SetToolTip(_modelHint, string.Empty);
             return;
@@ -259,8 +263,8 @@ public sealed partial class MainForm : Form
 
         var choice = _productTypeCombo.SelectedItem as ProductTypeChoice;
         _modelHint.Text = choice?.Variant is { } single
-            ? $"将查询 {single.ProductType}"
-            : $"将查询 {group.ProductTypes}";
+            ? Strings.Format("K122", single.ProductType)
+            : Strings.Format("K122", group.ProductTypes);
         _modelHint.ForeColor = Color.DimGray;
         _toolTip.SetToolTip(_modelHint, _modelHint.Text);
         UpdateCydiaState();
@@ -275,8 +279,8 @@ public sealed partial class MainForm : Form
         _toolTip.SetToolTip(
             _cydiaButton,
             available
-                ? "查询 Cydia 备份"
-                : "A7 及以后设备（含 iPhone 5c）Cydia 无 SHSH 缓存，只能用爱思查询/下载");
+                ? Strings.Get("K071")
+                : Strings.Get("K123"));
     }
 
     /// <summary>统一忙闲状态：查询/下载期间禁用所有查询与下载按钮。</summary>
@@ -345,7 +349,7 @@ public sealed partial class MainForm : Form
     {
         if (!EcidParser.TryParse(_ecidBox.Text, out var ecid, out var error))
         {
-            SetStatus("输入有误：" + error, Color.Firebrick);
+            SetStatus(Strings.Get("K124") + error, Color.Firebrick);
             _ecidBox.Focus();
             _ecidBox.SelectAll();
             return;
@@ -353,7 +357,7 @@ public sealed partial class MainForm : Form
 
         if (_modelCombo.SelectedItem is not DeviceGroup group)
         {
-            SetStatus("请先选择机型", Color.Firebrick);
+            SetStatus(Strings.Get("K125"), Color.Firebrick);
             return;
         }
 
@@ -363,7 +367,7 @@ public sealed partial class MainForm : Form
         var ct = cts.Token;
 
         SetBusy(true);
-        SetStatus($"正在查询 {group.Name} · ECID {ecid} · {targets.Count} 个 ProductType …", Color.FromArgb(0x33, 0x33, 0x33));
+        SetStatus(Strings.Format("K126", group.Name, ecid, targets.Count), Color.FromArgb(0x33, 0x33, 0x33));
         _listView.Items.Clear();
         _rawBox.Clear();
         _paramBox.Clear();
@@ -375,7 +379,7 @@ public sealed partial class MainForm : Form
             {
                 ct.ThrowIfCancellationRequested();
                 SetStatus(
-                    $"正在查询 {targets[i].ProductType}（{i + 1}/{targets.Count}）…",
+                    Strings.Format("K127", targets[i].ProductType, i + 1, targets.Count),
                     Color.FromArgb(0x33, 0x33, 0x33));
                 results.Add((targets[i], await _client.QueryBackupsAsync(ecid, targets[i].ProductType, ct)));
             }
@@ -384,16 +388,16 @@ public sealed partial class MainForm : Form
         }
         catch (OperationCanceledException) when (!ct.IsCancellationRequested)
         {
-            if (!_closing) SetStatus("查询超时：服务器无响应或本机网络无法访问 i4tool2.i4.cn", Color.Firebrick);
+            if (!_closing) SetStatus(Strings.Get("K128"), Color.Firebrick);
         }
         catch (OperationCanceledException)
         {
-            if (!_closing) SetStatus("已取消", Color.DimGray);
+            if (!_closing) SetStatus(Strings.Get("K129"), Color.DimGray);
         }
         catch (Exception ex)
         {
             if (_closing) return;
-            SetStatus("查询失败：" + ex.Message, Color.Firebrick);
+            SetStatus(Strings.Get("K130") + ex.Message, Color.Firebrick);
             _rawBox.Text = ex.ToString();
         }
         finally
@@ -408,7 +412,7 @@ public sealed partial class MainForm : Form
     {
         if (_listView.SelectedItems.Count == 0 || _listView.SelectedItems[0].Tag is not ResultRow row)
         {
-            SetStatus("请先在结果列表里选中一条 SHSH 记录（双击该行也可下载）", Color.Firebrick);
+            SetStatus(Strings.Get("K131"), Color.Firebrick);
             return;
         }
 
@@ -417,9 +421,9 @@ public sealed partial class MainForm : Form
 
         using var dialog = new SaveFileDialog
         {
-            Title = "保存 SHSH 文件",
+            Title = Strings.Get("K132"),
             FileName = FileNameFor(ecid, row),
-            Filter = "SHSH 文件 (*.shsh)|*.shsh|所有文件 (*.*)|*.*",
+            Filter = Strings.Get("K133"),
             DefaultExt = "shsh",
             AddExtension = true,
             OverwritePrompt = true,
@@ -440,27 +444,27 @@ public sealed partial class MainForm : Form
             var result = await DownloadRowAsync(ecid, row, token);
             if (!result.Success || result.Content is null)
             {
-                SetStatus("下载失败：" + result.Message, Color.Firebrick);
+                SetStatus(Strings.Get("K134") + result.Message, Color.Firebrick);
                 return;
             }
 
             await File.WriteAllBytesAsync(dialog.FileName, result.Content);
             var size = result.Content.Length.ToString("N0", CultureInfo.InvariantCulture);
             SetStatus(
-                $"已保存：{Path.GetFileName(dialog.FileName)}（{size} 字节，用时 {result.Elapsed.TotalMilliseconds:0} ms）",
+                Strings.Format("K135", Path.GetFileName(dialog.FileName), size, result.Elapsed.TotalMilliseconds),
                 Color.FromArgb(0x1B, 0x6E, 0x2F));
         }
         catch (OperationCanceledException) when (!token.IsCancellationRequested)
         {
-            if (!_closing) SetStatus("下载超时（90 秒）", Color.Firebrick);
+            if (!_closing) SetStatus(Strings.Get("K136"), Color.Firebrick);
         }
         catch (OperationCanceledException)
         {
-            if (!_closing) SetStatus("已取消下载", Color.DimGray);
+            if (!_closing) SetStatus(Strings.Get("K137"), Color.DimGray);
         }
         catch (Exception ex)
         {
-            if (!_closing) SetStatus("保存失败：" + ex.Message, Color.Firebrick);
+            if (!_closing) SetStatus(Strings.Get("K138") + ex.Message, Color.Firebrick);
         }
         finally
         {
@@ -504,7 +508,7 @@ public sealed partial class MainForm : Form
             return new DownloadOutcome(result.Success, result.Message, result.Content, result.Elapsed);
         }
 
-        return new DownloadOutcome(false, "该记录不可下载", null, TimeSpan.Zero);
+        return new DownloadOutcome(false, Strings.Get("K139"), null, TimeSpan.Zero);
     }
 
 
@@ -513,13 +517,13 @@ public sealed partial class MainForm : Form
     {
         if (_modelCombo.SelectedItem is not DeviceGroup { CydiaAvailable: true })
         {
-            SetStatus("该设备（A7 及以后 / iPhone 5c）Cydia 无 SHSH 缓存，仅支持爱思查询", Color.Firebrick);
+            SetStatus(Strings.Get("K140"), Color.Firebrick);
             return;
         }
 
         if (!EcidParser.TryParse(_ecidBox.Text, out var ecid, out var error))
         {
-            SetStatus("输入有误：" + error, Color.Firebrick);
+            SetStatus(Strings.Get("K124") + error, Color.Firebrick);
             _ecidBox.Focus();
             _ecidBox.SelectAll();
             return;
@@ -529,7 +533,7 @@ public sealed partial class MainForm : Form
         var ct = cts.Token;
 
         SetBusy(true);
-        SetStatus($"正在查询 Cydia（ECID {ecid}）…", Color.FromArgb(0x33, 0x33, 0x33));
+        SetStatus(Strings.Format("K141", ecid), Color.FromArgb(0x33, 0x33, 0x33));
         _listView.Items.Clear();
         _rawBox.Clear();
         _paramBox.Clear();
@@ -541,16 +545,16 @@ public sealed partial class MainForm : Form
         }
         catch (OperationCanceledException) when (!ct.IsCancellationRequested)
         {
-            if (!_closing) SetStatus("Cydia 查询超时：无法访问 cydia.saurik.com", Color.Firebrick);
+            if (!_closing) SetStatus(Strings.Get("K142"), Color.Firebrick);
         }
         catch (OperationCanceledException)
         {
-            if (!_closing) SetStatus("已取消", Color.DimGray);
+            if (!_closing) SetStatus(Strings.Get("K129"), Color.DimGray);
         }
         catch (Exception ex)
         {
             if (_closing) return;
-            SetStatus("Cydia 查询失败：" + ex.Message, Color.Firebrick);
+            SetStatus(Strings.Get("K143") + ex.Message, Color.Firebrick);
             _rawBox.Text = ex.ToString();
         }
         finally
@@ -564,8 +568,8 @@ public sealed partial class MainForm : Form
     {
         _paramBox.Text = string.Join(
             Environment.NewLine,
-            $"ECID：{ecid}（hex {ecid:x}）",
-            "Cydia 用十进制 ECID、无需签名：",
+            string.Format(Strings.Get("K174"), ecid, ecid),
+            Strings.Get("K144"),
             result.RequestUrl);
         _rawBox.Text = result.RawResponse;
         _rawBox.SelectionStart = 0;
@@ -589,7 +593,7 @@ public sealed partial class MainForm : Form
 
             if (!result.Success)
             {
-                _listView.Items.Add(new ListViewItem(["cydia(失败)", "-", "-", result.Message])
+                _listView.Items.Add(new ListViewItem([Strings.Get("K145"), "-", "-", result.Message])
                 {
                     ForeColor = Color.Firebrick,
                 });
@@ -605,14 +609,14 @@ public sealed partial class MainForm : Form
         var ms = result.Elapsed.TotalMilliseconds.ToString("0", CultureInfo.InvariantCulture);
         if (!result.Success)
         {
-            SetStatus($"Cydia 查询失败：{result.Message}（用时 {ms} ms）", Color.Firebrick);
+            SetStatus(Strings.Format("K146", result.Message, ms), Color.Firebrick);
             return;
         }
 
         SetStatus(
             result.Items.Count > 0
-                ? $"Cydia 查询成功：共 {result.Items.Count} 条备份（用时 {ms} ms）；可「下载选中」或「全部下载」"
-                : $"Cydia 查询成功：该 ECID 没有备份记录（用时 {ms} ms）",
+                ? Strings.Format("K147", result.Items.Count, ms)
+                : Strings.Format("K148", ms),
             result.Items.Count > 0 ? Color.FromArgb(0x1B, 0x6E, 0x2F) : Color.FromArgb(0x8A, 0x6D, 0x00));
     }
 
@@ -622,7 +626,7 @@ public sealed partial class MainForm : Form
         var rows = CollectRows();
         if (rows.Count == 0)
         {
-            SetStatus("当前没有可下载的结果", Color.Firebrick);
+            SetStatus(Strings.Get("K149"), Color.Firebrick);
             return;
         }
 
@@ -631,7 +635,7 @@ public sealed partial class MainForm : Form
 
         using var dialog = new FolderBrowserDialog
         {
-            Description = "选择 SHSH 文件的保存文件夹",
+            Description = Strings.Get("K150"),
             UseDescriptionForTitle = true,
             ShowNewFolderButton = true,
         };
@@ -650,7 +654,7 @@ public sealed partial class MainForm : Form
         try
         {
             var progress = new Progress<(int Index, int Total, string Label)>(p =>
-                SetStatus($"准备下载 {p.Index + 1}/{p.Total}：{p.Label} …", Color.FromArgb(0x33, 0x33, 0x33)));
+                SetStatus(Strings.Format("K151", p.Index + 1, p.Total, p.Label), Color.FromArgb(0x33, 0x33, 0x33)));
 
             var jobs = rows
                 .Select(row => new ShshJob(row.ProductType, row.Ios, FileNameFor(ecid, row), row))
@@ -667,37 +671,37 @@ public sealed partial class MainForm : Form
                 progress,
                 token);
 
-            var renamed = batch.Renamed > 0 ? $"（{batch.Renamed} 个重名文件已自动加序号）" : string.Empty;
+            var renamed = batch.Renamed > 0 ? Strings.Format("K152", batch.Renamed) : string.Empty;
             if (batch.Failures.Count == 0)
             {
                 SetStatus(
-                    $"全部下载完成：{batch.Succeeded} 个文件已保存到 {dialog.SelectedPath}{renamed}",
+                    Strings.Format("K153", batch.Succeeded, dialog.SelectedPath, renamed),
                     Color.FromArgb(0x1B, 0x6E, 0x2F));
             }
             else
             {
                 SetStatus(
-                    $"全部下载结束：成功 {batch.Succeeded} 个，失败 {batch.Failures.Count} 个，保存到 {dialog.SelectedPath}{renamed}",
+                    Strings.Format("K154", batch.Succeeded, batch.Failures.Count, dialog.SelectedPath, renamed),
                     Color.Firebrick);
                 MessageBox.Show(
                     this,
                     string.Join(Environment.NewLine, batch.Failures),
-                    "部分文件下载失败",
+                    Strings.Get("K155"),
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
             }
         }
         catch (OperationCanceledException) when (!token.IsCancellationRequested)
         {
-            if (!_closing) SetStatus("批量下载超时（10 分钟）", Color.Firebrick);
+            if (!_closing) SetStatus(Strings.Get("K156"), Color.Firebrick);
         }
         catch (OperationCanceledException)
         {
-            if (!_closing) SetStatus("已取消批量下载", Color.DimGray);
+            if (!_closing) SetStatus(Strings.Get("K157"), Color.DimGray);
         }
         catch (Exception ex)
         {
-            if (!_closing) SetStatus("批量下载失败：" + ex.Message, Color.Firebrick);
+            if (!_closing) SetStatus(Strings.Get("K158") + ex.Message, Color.Firebrick);
         }
         finally
         {
@@ -748,7 +752,7 @@ public sealed partial class MainForm : Form
 
             if (!result.Success)
             {
-                listRows.Add(new ListViewItem(["i4(失败)", device.ProductType, "-", result.Message])
+                listRows.Add(new ListViewItem([Strings.Get("K159"), device.ProductType, "-", result.Message])
                 {
                     ForeColor = Color.Firebrick,
                 });
@@ -757,9 +761,9 @@ public sealed partial class MainForm : Form
             paramBlocks.Add(string.Join(
                 Environment.NewLine,
                 $"[{device.ProductType} · {device.MarketingName}]",
-                "URL：" + result.RequestUrl,
-                "明文：" + result.PayloadJson,
-                "密文：" + result.CipherBase64));
+                Strings.Get("K175") + result.RequestUrl,
+                Strings.Get("K160") + result.PayloadJson,
+                Strings.Get("K161") + result.CipherBase64));
 
             rawBlocks.Add(string.Join(
                 Environment.NewLine,
@@ -767,7 +771,7 @@ public sealed partial class MainForm : Form
                 result.RawResponse));
         }
 
-        paramBlocks.Insert(0, $"ECID：{ecid}（hex {ecid:x}）　机型：{group.Name}　ProductType：{group.ProductTypes}");
+        paramBlocks.Insert(0, Strings.Format("K162", ecid, ecid, group.Name, group.ProductTypes));
         _paramBox.Text = string.Join(Environment.NewLine + Environment.NewLine, paramBlocks);
         _rawBox.Text = string.Join(Environment.NewLine + Environment.NewLine, rawBlocks);
         _rawBox.SelectionStart = 0;
@@ -789,18 +793,18 @@ public sealed partial class MainForm : Form
         {
             SetStatus(
                 totalItems > 0
-                    ? $"查询成功：{group.Name} · {results.Count} 个 ProductType，共 {totalItems} 条 SHSH 备份（用时 {ms} ms）；可「下载选中」或「全部下载」"
-                    : $"查询成功：{group.Name} 没有 SHSH 备份记录 · {results.Count} 个 ProductType（用时 {ms} ms）",
+                    ? Strings.Format("K163", group.Name, results.Count, totalItems, ms)
+                    : Strings.Format("K164", group.Name, results.Count, ms),
                 totalItems > 0 ? Color.FromArgb(0x1B, 0x6E, 0x2F) : Color.FromArgb(0x8A, 0x6D, 0x00));
         }
         else
         {
             var firstFailure = results.First(r => !r.Result.Success).Result;
             var headline = failed == results.Count
-                ? $"全部失败：{results.Count} 个 ProductType 均未查询成功"
-                : $"部分失败：{results.Count - failed}/{results.Count} 个 ProductType 查询成功，{totalItems} 条记录";
+                ? Strings.Format("K165", results.Count)
+                : Strings.Format("K166", results.Count - failed, results.Count, totalItems);
             SetStatus(
-                $"{headline}；首个错误：{firstFailure.Message}（用时 {ms} ms）",
+                Strings.Format("K167", headline, firstFailure.Message, ms),
                 Color.Firebrick);
         }
     }
@@ -811,18 +815,18 @@ public sealed partial class MainForm : Form
         {
             var hex = EcidParser.ToHex16(ecid);
             _ecidPreview.Text = usedDecimal
-                ? $"按十进制解析：{ecid}（十六进制 {hex}）"
-                : $"ECID 十进制：{ecid}（十六进制 {hex}）";
+                ? Strings.Format("K168", ecid, hex)
+                : Strings.Format("K169", ecid, hex);
             _ecidPreview.ForeColor = Color.DimGray;
         }
         else if (string.IsNullOrWhiteSpace(_ecidBox.Text))
         {
-            _ecidPreview.Text = "等待输入；ECID 可填十六进制（如 0011AABBCCDDEEFF）或十进制（如 1234567890123，13 位以上自动识别）";
+            _ecidPreview.Text = Strings.Get("K170");
             _ecidPreview.ForeColor = Color.DimGray;
         }
         else
         {
-            _ecidPreview.Text = "ECID 格式不正确：十六进制最多 16 位；十进制 13 位以上自动识别（十六进制想用纯数字请加 0x）";
+            _ecidPreview.Text = Strings.Get("K171");
             _ecidPreview.ForeColor = Color.Firebrick;
         }
     }
@@ -834,6 +838,7 @@ public sealed partial class MainForm : Form
     }
 
 }
+
 
 
 

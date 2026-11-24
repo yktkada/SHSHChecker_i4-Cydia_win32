@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="K001" xml:space="preserve">
+    <value>请求超时（服务器无响应，或本机网络无法访问 cydia.saurik.com）</value>
+  </data>
+  <data name="K002" xml:space="preserve">
+    <value>网络错误：</value>
+  </data>
+  <data name="K003" xml:space="preserve">
+    <value>该记录缺少 build / chip / board，无法下载</value>
+  </data>
+  <data name="K004" xml:space="preserve">
+    <value>取 BuildManifest 失败（HTTP {0}）</value>
+  </data>
+  <data name="K005" xml:space="preserve">
+    <value>取 BuildManifest 超时</value>
+  </data>
+  <data name="K006" xml:space="preserve">
+    <value>请求 Cydia TSS 超时</value>
+  </data>
+  <data name="K007" xml:space="preserve">
+    <value>Cydia TSS 返回 HTTP {0} {1}</value>
+  </data>
+  <data name="K008" xml:space="preserve">
+    <value>返回里没有找到 plist 内容</value>
+  </data>
+  <data name="K009" xml:space="preserve">
+    <value>返回的 plist 里没有有效的 APTicket，不是可用的 SHSH 备份</value>
+  </data>
+  <data name="K010" xml:space="preserve">
+    <value>Cydia 返回 STATUS={0}</value>
+  </data>
+  <data name="K011" xml:space="preserve">
+    <value>Cydia 拒绝了该请求</value>
+  </data>
+  <data name="K012" xml:space="preserve">
+    <value>服务器返回空内容</value>
+  </data>
+  <data name="K013" xml:space="preserve">
+    <value>返回内容不是 JSON 数组</value>
+  </data>
+  <data name="K014" xml:space="preserve">
+    <value>返回内容不是 JSON（可能被风控或网关拦截）：</value>
+  </data>
+  <data name="K015" xml:space="preserve">
+    <value>3.5 英寸</value>
+  </data>
+  <data name="K016" xml:space="preserve">
+    <value>4 英寸</value>
+  </data>
+  <data name="K017" xml:space="preserve">
+    <value>iPhone SE (第 1 代)</value>
+  </data>
+  <data name="K018" xml:space="preserve">
+    <value>4.7 英寸</value>
+  </data>
+  <data name="K019" xml:space="preserve">
+    <value>iPhone SE (第 2 代)</value>
+  </data>
+  <data name="K020" xml:space="preserve">
+    <value>iPhone SE (第 3 代)</value>
+  </data>
+  <data name="K021" xml:space="preserve">
+    <value>5.5 英寸</value>
+  </data>
+  <data name="K022" xml:space="preserve">
+    <value>iPad mini 1 Cellular（中国大陆）</value>
+  </data>
+  <data name="K023" xml:space="preserve">
+    <value>iPad 4 Cellular（中国大陆）</value>
+  </data>
+  <data name="K024" xml:space="preserve">
+    <value>iPod touch (第 1 代)</value>
+  </data>
+  <data name="K025" xml:space="preserve">
+    <value>iPod touch (第 2 代)</value>
+  </data>
+  <data name="K026" xml:space="preserve">
+    <value>iPod touch (第 3 代)</value>
+  </data>
+  <data name="K027" xml:space="preserve">
+    <value>iPod touch (第 4 代)</value>
+  </data>
+  <data name="K028" xml:space="preserve">
+    <value>iPod touch (第 5 代)</value>
+  </data>
+  <data name="K029" xml:space="preserve">
+    <value>iPod touch (第 6 代)</value>
+  </data>
+  <data name="K030" xml:space="preserve">
+    <value>iPod touch (第 7 代)</value>
+  </data>
+  <data name="K031" xml:space="preserve">
+    <value>ECID 不能为空</value>
+  </data>
+  <data name="K032" xml:space="preserve">
+    <value>ECID 超出 64 位范围</value>
+  </data>
+  <data name="K033" xml:space="preserve">
+    <value>十六进制 ECID 最多 16 位（64 位）；如果是十进制 ECID，请直接粘贴（13 位以上会自动识别）</value>
+  </data>
+  <data name="K034" xml:space="preserve">
+    <value>ECID 含有非十六进制字符</value>
+  </data>
+  <data name="K035" xml:space="preserve">
+    <value>ECID 不能为 0</value>
+  </data>
+  <data name="K036" xml:space="preserve">
+    <value>请求超时（服务器无响应，或本机网络无法访问 i4tool2.i4.cn）</value>
+  </data>
+  <data name="K037" xml:space="preserve">
+    <value>shsh2 文件里没有 APNonce（ticket 的 BNCH），无法上传</value>
+  </data>
+  <data name="K038" xml:space="preserve">
+    <value>服务器已接受该备份</value>
+  </data>
+  <data name="K039" xml:space="preserve">
+    <value>服务器拒绝该备份（可能格式或内容不被接受、该版本已不受支持，或触发风控）</value>
+  </data>
+  <data name="K040" xml:space="preserve">
+    <value>上传超时</value>
+  </data>
+  <data name="K041" xml:space="preserve">
+    <value>服务器返回空内容（HTTP {0}）</value>
+  </data>
+  <data name="K042" xml:space="preserve">
+    <value>HTTP {0} {1}（{2} 字节）</value>
+  </data>
+  <data name="K043" xml:space="preserve">
+    <value>下载超时（服务器无响应，或本机网络无法访问 i4tool2.i4.cn）</value>
+  </data>
+  <data name="K044" xml:space="preserve">
+    <value>返回内容不是 JSON 对象（{0}）</value>
+  </data>
+  <data name="K045" xml:space="preserve">
+    <value>服务器没有返回 shsh 内容</value>
+  </data>
+  <data name="K046" xml:space="preserve">
+    <value>返回内容不是有效 JSON</value>
+  </data>
+  <data name="K047" xml:space="preserve">
+    <value>服务器返回 code={0}</value>
+  </data>
+  <data name="K048" xml:space="preserve">
+    <value>返回内容不是 JSON 对象</value>
+  </data>
+  <data name="K049" xml:space="preserve">
+    <value>服务器返回 success=true，但没有备份记录</value>
+  </data>
+  <data name="K050" xml:space="preserve">
+    <value>服务器返回 success=false（签名或参数被拒绝）</value>
+  </data>
+  <data name="K051" xml:space="preserve">
+    <value>接口没有返回 list 字段</value>
+  </data>
+  <data name="K052" xml:space="preserve">
+    <value>{0} {1}：保存失败 {2}</value>
+  </data>
+  <data name="K053" xml:space="preserve">
+    <value>没找到 ECID</value>
+  </data>
+  <data name="K054" xml:space="preserve">
+    <value>没识别出机型（文件名需包含 ProductType，如 iPhone14,5）</value>
+  </data>
+  <data name="K055" xml:space="preserve">
+    <value>没识别出系统版本（文件名需包含版本，如 17.6-21G5052e）</value>
+  </data>
+  <data name="K056" xml:space="preserve">
+    <value>不是可识别的 SHSH 文件</value>
+  </data>
+  <data name="K057" xml:space="preserve">
+    <value>没识别出机型，可在上方「机型 / ProductType」选择后重试</value>
+  </data>
+  <data name="K058" xml:space="preserve">
+    <value>没识别出系统版本</value>
+  </data>
+  <data name="K059" xml:space="preserve">
+    <value>shsh2 缺少 APNonce</value>
+  </data>
+  <data name="K060" xml:space="preserve">
+    <value>{0}：文件超过上限 {1} 个，已截断（请选更小的目录）</value>
+  </data>
+  <data name="K061" xml:space="preserve">
+    <value>{0}：网络路径不可达（检查共享名、凭据或网络）</value>
+  </data>
+  <data name="K062" xml:space="preserve">
+    <value>{0}：文件不存在</value>
+  </data>
+  <data name="K063" xml:space="preserve">
+    <value>{0}：文件夹里没有 .shsh / .shsh2 / .plist</value>
+  </data>
+  <data name="K064" xml:space="preserve">
+    <value>{0}：无法读取文件夹（{1}）</value>
+  </data>
+  <data name="K065" xml:space="preserve">
+    <value>就绪：输入 ECID（hex），选择机型后点击查询。</value>
+  </data>
+  <data name="K066" xml:space="preserve">
+    <value>十六进制：0011AABBCCDDEEFF　或　十进制：1234567890123（13 位以上自动识别）</value>
+  </data>
+  <data name="K067" xml:space="preserve">
+    <value>机型（大类）</value>
+  </data>
+  <data name="K068" xml:space="preserve">
+    <value>启用 arm64 设备查询</value>
+  </data>
+  <data name="K069" xml:space="preserve">
+    <value>启用 arm64e 设备查询</value>
+  </data>
+  <data name="K070" xml:space="preserve">
+    <value>查询爱思 SHSH 备份</value>
+  </data>
+  <data name="K071" xml:space="preserve">
+    <value>查询 Cydia 备份</value>
+  </data>
+  <data name="K072" xml:space="preserve">
+    <value>下载选中</value>
+  </data>
+  <data name="K073" xml:space="preserve">
+    <value>全部下载</value>
+  </data>
+  <data name="K074" xml:space="preserve">
+    <value>来源</value>
+  </data>
+  <data name="K075" xml:space="preserve">
+    <value>iOS 版本</value>
+  </data>
+  <data name="K076" xml:space="preserve">
+    <value>其他信息</value>
+  </data>
+  <data name="K077" xml:space="preserve">
+    <value>原始响应</value>
+  </data>
+  <data name="K078" xml:space="preserve">
+    <value>请求参数</value>
+  </data>
+  <data name="K079" xml:space="preserve">
+    <value>上传 SHSH</value>
+  </data>
+  <data name="K080" xml:space="preserve">
+    <value>浏览…</value>
+  </data>
+  <data name="K081" xml:space="preserve">
+    <value>上传到爱思服务器</value>
+  </data>
+  <data name="K082" xml:space="preserve">
+    <value>现代设备：请先用 Blobsaver 保存 SHSH，再选择文件上传。</value>
+  </data>
+  <data name="K083" xml:space="preserve">
+    <value>iOS 11 及以下：上传后可能被精简。</value>
+  </data>
+  <data name="K084" xml:space="preserve">
+    <value>无论如何，都应该在本地保存有效的 shsh 原件！</value>
+  </data>
+  <data name="K085" xml:space="preserve">
+    <value>选择 SHSH 文件（可多选）</value>
+  </data>
+  <data name="K086" xml:space="preserve">
+    <value>SHSH 文件 (*.shsh;*.shsh2;*.plist)|*.shsh;*.shsh2;*.plist|所有文件 (*.*)|*.*</value>
+  </data>
+  <data name="K087" xml:space="preserve">
+    <value>正在检查路径 …</value>
+  </data>
+  <data name="K088" xml:space="preserve">
+    <value>路径解析失败</value>
+  </data>
+  <data name="K089" xml:space="preserve">
+    <value>没有可加载的 SHSH 文件</value>
+  </data>
+  <data name="K090" xml:space="preserve">
+    <value>已选择 {0} 个文件（{1} 等）</value>
+  </data>
+  <data name="K091" xml:space="preserve">
+    <value>（未识别机型，使用上方选择：{0}）</value>
+  </data>
+  <data name="K092" xml:space="preserve">
+    <value>无法上传</value>
+  </data>
+  <data name="K093" xml:space="preserve">
+    <value>已选 {0} 个文件：{1} 个可上传</value>
+  </data>
+  <data name="K094" xml:space="preserve">
+    <value>，{0} 个有问题</value>
+  </data>
+  <data name="K095" xml:space="preserve">
+    <value>，{0} 个使用上方机型</value>
+  </data>
+  <data name="K096" xml:space="preserve">
+    <value>共 {0} 个文件，全部可上传</value>
+  </data>
+  <data name="K097" xml:space="preserve">
+    <value>使用上方选择框机型的文件：</value>
+  </data>
+  <data name="K098" xml:space="preserve">
+    <value>{0}…另有 {1} 个</value>
+  </data>
+  <data name="K099" xml:space="preserve">
+    <value>没有可上传的文件</value>
+  </data>
+  <data name="K100" xml:space="preserve">
+    <value>文件名</value>
+  </data>
+  <data name="K101" xml:space="preserve">
+    <value>plist / 文件名</value>
+  </data>
+  <data name="K102" xml:space="preserve">
+    <value>将把下面这条备份上传到爱思服务器：{0}{1}</value>
+  </data>
+  <data name="K103" xml:space="preserve">
+    <value>机型：{0}{1}</value>
+  </data>
+  <data name="K104" xml:space="preserve">
+    <value>版本：{0}{1}{2}</value>
+  </data>
+  <data name="K105" xml:space="preserve">
+    <value>机型与版本取自{0}，请确认无误。继续上传？</value>
+  </data>
+  <data name="K106" xml:space="preserve">
+    <value>将按顺序上传 {0} 个文件到爱思服务器。</value>
+  </data>
+  <data name="K107" xml:space="preserve">
+    <value>{0}另有 {1} 个文件因信息不全会跳过。</value>
+  </data>
+  <data name="K108" xml:space="preserve">
+    <value>{0}{1}机型/版本取自文件名或 plist，请确认无误。继续上传？</value>
+  </data>
+  <data name="K109" xml:space="preserve">
+    <value>确认上传</value>
+  </data>
+  <data name="K110" xml:space="preserve">
+    <value>已取消上传</value>
+  </data>
+  <data name="K111" xml:space="preserve">
+    <value>正在上传 …</value>
+  </data>
+  <data name="K112" xml:space="preserve">
+    <value>正在上传 {0}/{1}：{2} …</value>
+  </data>
+  <data name="K113" xml:space="preserve">
+    <value>上传成功：{0} 个文件（服务器已接受）</value>
+  </data>
+  <data name="K114" xml:space="preserve">
+    <value>成功 {0} 个</value>
+  </data>
+  <data name="K115" xml:space="preserve">
+    <value>，跳过 {0} 个</value>
+  </data>
+  <data name="K116" xml:space="preserve">
+    <value>上传完成：成功 {0}，失败 {1}</value>
+  </data>
+  <data name="K117" xml:space="preserve">
+    <value>，跳过 {0}</value>
+  </data>
+  <data name="K118" xml:space="preserve">
+    <value>上传超时或已取消</value>
+  </data>
+  <data name="K119" xml:space="preserve">
+    <value>上传失败</value>
+  </data>
+  <data name="K120" xml:space="preserve">
+    <value>全部 ProductType</value>
+  </data>
+  <data name="K121" xml:space="preserve">
+    <value>没有可选机型</value>
+  </data>
+  <data name="K122" xml:space="preserve">
+    <value>将查询 {0}</value>
+  </data>
+  <data name="K123" xml:space="preserve">
+    <value>A7 及以后设备（含 iPhone 5c）Cydia 无 SHSH 缓存，只能用爱思查询/下载</value>
+  </data>
+  <data name="K124" xml:space="preserve">
+    <value>输入有误：</value>
+  </data>
+  <data name="K125" xml:space="preserve">
+    <value>请先选择机型</value>
+  </data>
+  <data name="K126" xml:space="preserve">
+    <value>正在查询 {0} · ECID {1} · {2} 个 ProductType …</value>
+  </data>
+  <data name="K127" xml:space="preserve">
+    <value>正在查询 {0}（{1}/{2}）…</value>
+  </data>
+  <data name="K128" xml:space="preserve">
+    <value>查询超时：服务器无响应或本机网络无法访问 i4tool2.i4.cn</value>
+  </data>
+  <data name="K129" xml:space="preserve">
+    <value>已取消</value>
+  </data>
+  <data name="K130" xml:space="preserve">
+    <value>查询失败：</value>
+  </data>
+  <data name="K131" xml:space="preserve">
+    <value>请先在结果列表里选中一条 SHSH 记录（双击该行也可下载）</value>
+  </data>
+  <data name="K132" xml:space="preserve">
+    <value>保存 SHSH 文件</value>
+  </data>
+  <data name="K133" xml:space="preserve">
+    <value>SHSH 文件 (*.shsh)|*.shsh|所有文件 (*.*)|*.*</value>
+  </data>
+  <data name="K134" xml:space="preserve">
+    <value>下载失败：</value>
+  </data>
+  <data name="K135" xml:space="preserve">
+    <value>已保存：{0}（{1} 字节，用时 {2:0} ms）</value>
+  </data>
+  <data name="K136" xml:space="preserve">
+    <value>下载超时（90 秒）</value>
+  </data>
+  <data name="K137" xml:space="preserve">
+    <value>已取消下载</value>
+  </data>
+  <data name="K138" xml:space="preserve">
+    <value>保存失败：</value>
+  </data>
+  <data name="K139" xml:space="preserve">
+    <value>该记录不可下载</value>
+  </data>
+  <data name="K140" xml:space="preserve">
+    <value>该设备（A7 及以后 / iPhone 5c）Cydia 无 SHSH 缓存，仅支持爱思查询</value>
+  </data>
+  <data name="K141" xml:space="preserve">
+    <value>正在查询 Cydia（ECID {0}）…</value>
+  </data>
+  <data name="K142" xml:space="preserve">
+    <value>Cydia 查询超时：无法访问 cydia.saurik.com</value>
+  </data>
+  <data name="K143" xml:space="preserve">
+    <value>Cydia 查询失败：</value>
+  </data>
+  <data name="K144" xml:space="preserve">
+    <value>Cydia 用十进制 ECID、无需签名：</value>
+  </data>
+  <data name="K145" xml:space="preserve">
+    <value>cydia(失败)</value>
+  </data>
+  <data name="K146" xml:space="preserve">
+    <value>Cydia 查询失败：{0}（用时 {1} ms）</value>
+  </data>
+  <data name="K147" xml:space="preserve">
+    <value>Cydia 查询成功：共 {0} 条备份（用时 {1} ms）；可「下载选中」或「全部下载」</value>
+  </data>
+  <data name="K148" xml:space="preserve">
+    <value>Cydia 查询成功：该 ECID 没有备份记录（用时 {0} ms）</value>
+  </data>
+  <data name="K149" xml:space="preserve">
+    <value>当前没有可下载的结果</value>
+  </data>
+  <data name="K150" xml:space="preserve">
+    <value>选择 SHSH 文件的保存文件夹</value>
+  </data>
+  <data name="K151" xml:space="preserve">
+    <value>准备下载 {0}/{1}：{2} …</value>
+  </data>
+  <data name="K152" xml:space="preserve">
+    <value>（{0} 个重名文件已自动加序号）</value>
+  </data>
+  <data name="K153" xml:space="preserve">
+    <value>全部下载完成：{0} 个文件已保存到 {1}{2}</value>
+  </data>
+  <data name="K154" xml:space="preserve">
+    <value>全部下载结束：成功 {0} 个，失败 {1} 个，保存到 {2}{3}</value>
+  </data>
+  <data name="K155" xml:space="preserve">
+    <value>部分文件下载失败</value>
+  </data>
+  <data name="K156" xml:space="preserve">
+    <value>批量下载超时（10 分钟）</value>
+  </data>
+  <data name="K157" xml:space="preserve">
+    <value>已取消批量下载</value>
+  </data>
+  <data name="K158" xml:space="preserve">
+    <value>批量下载失败：</value>
+  </data>
+  <data name="K159" xml:space="preserve">
+    <value>i4(失败)</value>
+  </data>
+  <data name="K160" xml:space="preserve">
+    <value>明文：</value>
+  </data>
+  <data name="K161" xml:space="preserve">
+    <value>密文：</value>
+  </data>
+  <data name="K162" xml:space="preserve">
+    <value>ECID：{0}（hex {1:x}）　机型：{2}　ProductType：{3}</value>
+  </data>
+  <data name="K163" xml:space="preserve">
+    <value>查询成功：{0} · {1} 个 ProductType，共 {2} 条 SHSH 备份（用时 {3} ms）；可「下载选中」或「全部下载」</value>
+  </data>
+  <data name="K164" xml:space="preserve">
+    <value>查询成功：{0} 没有 SHSH 备份记录 · {1} 个 ProductType（用时 {2} ms）</value>
+  </data>
+  <data name="K165" xml:space="preserve">
+    <value>全部失败：{0} 个 ProductType 均未查询成功</value>
+  </data>
+  <data name="K166" xml:space="preserve">
+    <value>部分失败：{0}/{1} 个 ProductType 查询成功，{2} 条记录</value>
+  </data>
+  <data name="K167" xml:space="preserve">
+    <value>{0}；首个错误：{1}（用时 {2} ms）</value>
+  </data>
+  <data name="K168" xml:space="preserve">
+    <value>按十进制解析：{0}（十六进制 {1}）</value>
+  </data>
+  <data name="K169" xml:space="preserve">
+    <value>ECID 十进制：{0}（十六进制 {1}）</value>
+  </data>
+  <data name="K170" xml:space="preserve">
+    <value>等待输入；ECID 可填十六进制（如 0011AABBCCDDEEFF）或十进制（如 1234567890123，13 位以上自动识别）</value>
+  </data>
+  <data name="K171" xml:space="preserve">
+    <value>ECID 格式不正确：十六进制最多 16 位；十进制 13 位以上自动识别（十六进制想用纯数字请加 0x）</value>
+  </data>
+  <data name="K172" xml:space="preserve">
+    <value>就绪：输入 ECID（hex），选择机型后点击查询 Cydia。</value>
+  </data>
+  <data name="K173" xml:space="preserve">
+    <value>SHSH Checker（i4 / Cydia）</value>
+  </data>
+  <data name="K174" xml:space="preserve">
+    <value>ECID：{0}（hex {1:x}）</value>
+  </data>
+  <data name="K175" xml:space="preserve">
+    <value>URL：</value>
+  </data>
+  <data name="K176" xml:space="preserve">
+    <value>ECID（hex）</value>
+  </data>
+  <data name="K177" xml:space="preserve">
+    <value>{0}：{1}</value>
+  </data>
+  <data name="K178" xml:space="preserve">
+    <value>ECID：{0}{1}</value>
+  </data>
+  <data name="K179" xml:space="preserve">
+    <value>{0}：{1}</value>
+  </data>
+  <data name="K180" xml:space="preserve">
+    <value>{0} - {1}（{2}）</value>
+  </data>
+  <data name="K181" xml:space="preserve">
+    <value>{0} {1}：{2}</value>
+  </data>
+  <data name="K182" xml:space="preserve">
+    <value>{0} {1}：{2}</value>
+  </data>
+</root>
+

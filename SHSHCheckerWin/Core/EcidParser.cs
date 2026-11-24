@@ -28,7 +28,7 @@ public static class EcidParser
 
         if (text is null)
         {
-            error = "ECID 不能为空";
+            error = Strings.Get("K031");
             return false;
         }
 
@@ -41,7 +41,7 @@ public static class EcidParser
 
         if (value.Length == 0)
         {
-            error = "ECID 不能为空";
+            error = Strings.Get("K031");
             return false;
         }
 
@@ -51,7 +51,7 @@ public static class EcidParser
         {
             if (!ulong.TryParse(value, NumberStyles.None, CultureInfo.InvariantCulture, out ecid))
             {
-                error = "ECID 超出 64 位范围";
+                error = Strings.Get("K032");
                 return false;
             }
 
@@ -61,20 +61,20 @@ public static class EcidParser
         {
             if (value.Length > 16)
             {
-                error = "十六进制 ECID 最多 16 位（64 位）；如果是十进制 ECID，请直接粘贴（13 位以上会自动识别）";
+                error = Strings.Get("K033");
                 return false;
             }
 
             if (!ulong.TryParse(value, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out ecid))
             {
-                error = "ECID 含有非十六进制字符";
+                error = Strings.Get("K034");
                 return false;
             }
         }
 
         if (ecid == 0)
         {
-            error = "ECID 不能为 0";
+            error = Strings.Get("K035");
             return false;
         }
 

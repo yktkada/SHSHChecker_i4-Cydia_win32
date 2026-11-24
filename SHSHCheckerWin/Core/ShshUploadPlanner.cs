@@ -19,13 +19,13 @@ public static class ShshUploadPlanner
 
         if (info is null)
         {
-            error = "不是可识别的 SHSH 文件";
+            error = Strings.Get("K056");
             return false;
         }
 
         if (info.Ecid == 0)
         {
-            error = "没找到 ECID";
+            error = Strings.Get("K053");
             return false;
         }
 
@@ -34,19 +34,19 @@ public static class ShshUploadPlanner
             : info.ProductType;
         if (model.Length == 0)
         {
-            error = "没识别出机型，可在上方「机型 / ProductType」选择后重试";
+            error = Strings.Get("K057");
             return false;
         }
 
         if (string.IsNullOrEmpty(info.Version))
         {
-            error = "没识别出系统版本";
+            error = Strings.Get("K058");
             return false;
         }
 
         if (info.IsShsh2 && string.IsNullOrEmpty(info.Nonce))
         {
-            error = "shsh2 缺少 APNonce";
+            error = Strings.Get("K059");
             return false;
         }
 

@@ -27,17 +27,17 @@ public sealed record ShshFileInfo(
     {
         if (Ecid == 0)
         {
-            return "没找到 ECID";
+            return Strings.Get("K053");
         }
 
         if (string.IsNullOrEmpty(ProductType))
         {
-            return "没识别出机型（文件名需包含 ProductType，如 iPhone14,5）";
+            return Strings.Get("K054");
         }
 
         if (string.IsNullOrEmpty(Version))
         {
-            return "没识别出系统版本（文件名需包含版本，如 17.6-21G5052e）";
+            return Strings.Get("K055");
         }
 
         // 老格式（iOS 11 及以下）plist 里通常没有 APNonce：允许用占位 nonce 尝试上传

@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="K001" xml:space="preserve">
+    <value>Request timed out (no response, or this machine cannot reach cydia.saurik.com)</value>
+  </data>
+  <data name="K002" xml:space="preserve">
+    <value>Network error: </value>
+  </data>
+  <data name="K003" xml:space="preserve">
+    <value>This record lacks build / chip / board and cannot be downloaded</value>
+  </data>
+  <data name="K004" xml:space="preserve">
+    <value>Failed to fetch BuildManifest (HTTP {0})</value>
+  </data>
+  <data name="K005" xml:space="preserve">
+    <value>BuildManifest request timed out</value>
+  </data>
+  <data name="K006" xml:space="preserve">
+    <value>Cydia TSS request timed out</value>
+  </data>
+  <data name="K007" xml:space="preserve">
+    <value>Cydia TSS returned HTTP {0} {1}</value>
+  </data>
+  <data name="K008" xml:space="preserve">
+    <value>No plist content found in the response</value>
+  </data>
+  <data name="K009" xml:space="preserve">
+    <value>The returned plist has no valid APTicket; not a usable SHSH backup</value>
+  </data>
+  <data name="K010" xml:space="preserve">
+    <value>Cydia returned STATUS={0}</value>
+  </data>
+  <data name="K011" xml:space="preserve">
+    <value>Cydia rejected the request</value>
+  </data>
+  <data name="K012" xml:space="preserve">
+    <value>Server returned empty content</value>
+  </data>
+  <data name="K013" xml:space="preserve">
+    <value>Response is not a JSON array</value>
+  </data>
+  <data name="K014" xml:space="preserve">
+    <value>Response is not JSON (possibly blocked by a gateway or rate limit): </value>
+  </data>
+  <data name="K015" xml:space="preserve">
+    <value>3.5-inch</value>
+  </data>
+  <data name="K016" xml:space="preserve">
+    <value>4-inch</value>
+  </data>
+  <data name="K017" xml:space="preserve">
+    <value>iPhone SE (1st generation)</value>
+  </data>
+  <data name="K018" xml:space="preserve">
+    <value>4.7-inch</value>
+  </data>
+  <data name="K019" xml:space="preserve">
+    <value>iPhone SE (2nd generation)</value>
+  </data>
+  <data name="K020" xml:space="preserve">
+    <value>iPhone SE (3rd generation)</value>
+  </data>
+  <data name="K021" xml:space="preserve">
+    <value>5.5-inch</value>
+  </data>
+  <data name="K022" xml:space="preserve">
+    <value>iPad mini 1 Cellular (China mainland)</value>
+  </data>
+  <data name="K023" xml:space="preserve">
+    <value>iPad 4 Cellular (China mainland)</value>
+  </data>
+  <data name="K024" xml:space="preserve">
+    <value>iPod touch (1st generation)</value>
+  </data>
+  <data name="K025" xml:space="preserve">
+    <value>iPod touch (2nd generation)</value>
+  </data>
+  <data name="K026" xml:space="preserve">
+    <value>iPod touch (3rd generation)</value>
+  </data>
+  <data name="K027" xml:space="preserve">
+    <value>iPod touch (4th generation)</value>
+  </data>
+  <data name="K028" xml:space="preserve">
+    <value>iPod touch (5th generation)</value>
+  </data>
+  <data name="K029" xml:space="preserve">
+    <value>iPod touch (6th generation)</value>
+  </data>
+  <data name="K030" xml:space="preserve">
+    <value>iPod touch (7th generation)</value>
+  </data>
+  <data name="K031" xml:space="preserve">
+    <value>ECID cannot be empty</value>
+  </data>
+  <data name="K032" xml:space="preserve">
+    <value>ECID is out of 64-bit range</value>
+  </data>
+  <data name="K033" xml:space="preserve">
+    <value>Hex ECID is at most 16 digits; for decimal ECIDs just paste it (13+ digits are auto-detected)</value>
+  </data>
+  <data name="K034" xml:space="preserve">
+    <value>ECID contains non-hex characters</value>
+  </data>
+  <data name="K035" xml:space="preserve">
+    <value>ECID cannot be 0</value>
+  </data>
+  <data name="K036" xml:space="preserve">
+    <value>Request timed out (no response, or this machine cannot reach i4tool2.i4.cn)</value>
+  </data>
+  <data name="K037" xml:space="preserve">
+    <value>The shsh2 file has no APNonce (IMG4 BNCH), so it cannot be uploaded</value>
+  </data>
+  <data name="K038" xml:space="preserve">
+    <value>Server accepted this backup</value>
+  </data>
+  <data name="K039" xml:space="preserve">
+    <value>Server rejected this backup (format/content not accepted, version unsupported, or rate limited)</value>
+  </data>
+  <data name="K040" xml:space="preserve">
+    <value>Upload timed out</value>
+  </data>
+  <data name="K041" xml:space="preserve">
+    <value>Server returned empty content (HTTP {0})</value>
+  </data>
+  <data name="K042" xml:space="preserve">
+    <value>HTTP {0} {1} ({2} bytes)</value>
+  </data>
+  <data name="K043" xml:space="preserve">
+    <value>Download timed out (no response, or this machine cannot reach i4tool2.i4.cn)</value>
+  </data>
+  <data name="K044" xml:space="preserve">
+    <value>Response is not a JSON object ({0})</value>
+  </data>
+  <data name="K045" xml:space="preserve">
+    <value>Server did not return shsh content</value>
+  </data>
+  <data name="K046" xml:space="preserve">
+    <value>Response is not valid JSON</value>
+  </data>
+  <data name="K047" xml:space="preserve">
+    <value>Server returned code={0}</value>
+  </data>
+  <data name="K048" xml:space="preserve">
+    <value>Response is not a JSON object</value>
+  </data>
+  <data name="K049" xml:space="preserve">
+    <value>Server returned success=true but no backup records</value>
+  </data>
+  <data name="K050" xml:space="preserve">
+    <value>Server returned success=false (signature or parameters rejected)</value>
+  </data>
+  <data name="K051" xml:space="preserve">
+    <value>Response has no list field</value>
+  </data>
+  <data name="K052" xml:space="preserve">
+    <value>{0} {1}: save failed {2}</value>
+  </data>
+  <data name="K053" xml:space="preserve">
+    <value>ECID not found</value>
+  </data>
+  <data name="K054" xml:space="preserve">
+    <value>Product type not recognized (filename must contain a ProductType such as iPhone14,5)</value>
+  </data>
+  <data name="K055" xml:space="preserve">
+    <value>iOS version not recognized (filename must contain a version such as 17.6-21G5052e)</value>
+  </data>
+  <data name="K056" xml:space="preserve">
+    <value>Not a recognizable SHSH file</value>
+  </data>
+  <data name="K057" xml:space="preserve">
+    <value>Product type not recognized; select one in Model / ProductType above and retry</value>
+  </data>
+  <data name="K058" xml:space="preserve">
+    <value>iOS version not recognized</value>
+  </data>
+  <data name="K059" xml:space="preserve">
+    <value>shsh2 is missing APNonce</value>
+  </data>
+  <data name="K060" xml:space="preserve">
+    <value>{0}: more than {1} files, truncated (choose a smaller folder)</value>
+  </data>
+  <data name="K061" xml:space="preserve">
+    <value>{0}: network path unreachable (check share name, credentials or network)</value>
+  </data>
+  <data name="K062" xml:space="preserve">
+    <value>{0}: file not found</value>
+  </data>
+  <data name="K063" xml:space="preserve">
+    <value>{0}: no .shsh / .shsh2 / .plist in this folder</value>
+  </data>
+  <data name="K064" xml:space="preserve">
+    <value>{0}: cannot read folder ({1})</value>
+  </data>
+  <data name="K065" xml:space="preserve">
+    <value>Ready: enter an ECID (hex), pick a model, then click Query.</value>
+  </data>
+  <data name="K066" xml:space="preserve">
+    <value>Hex: 0011AABBCCDDEEFF  or  decimal: 1234567890123 (13+ digits auto-detected)</value>
+  </data>
+  <data name="K067" xml:space="preserve">
+    <value>Model (family)</value>
+  </data>
+  <data name="K068" xml:space="preserve">
+    <value>Enable arm64 device queries</value>
+  </data>
+  <data name="K069" xml:space="preserve">
+    <value>Enable arm64e device queries</value>
+  </data>
+  <data name="K070" xml:space="preserve">
+    <value>Query i4 SHSH backups</value>
+  </data>
+  <data name="K071" xml:space="preserve">
+    <value>Query Cydia backups</value>
+  </data>
+  <data name="K072" xml:space="preserve">
+    <value>Download selected</value>
+  </data>
+  <data name="K073" xml:space="preserve">
+    <value>Download all</value>
+  </data>
+  <data name="K074" xml:space="preserve">
+    <value>Source</value>
+  </data>
+  <data name="K075" xml:space="preserve">
+    <value>iOS version</value>
+  </data>
+  <data name="K076" xml:space="preserve">
+    <value>Other info</value>
+  </data>
+  <data name="K077" xml:space="preserve">
+    <value>Raw response</value>
+  </data>
+  <data name="K078" xml:space="preserve">
+    <value>Request parameters</value>
+  </data>
+  <data name="K079" xml:space="preserve">
+    <value>Upload SHSH</value>
+  </data>
+  <data name="K080" xml:space="preserve">
+    <value>Browse…</value>
+  </data>
+  <data name="K081" xml:space="preserve">
+    <value>Upload to i4 server</value>
+  </data>
+  <data name="K082" xml:space="preserve">
+    <value>Modern devices: save the SHSH with Blobsaver first, then choose the file to upload.</value>
+  </data>
+  <data name="K083" xml:space="preserve">
+    <value>iOS 11 and earlier: uploads may be trimmed by the server.</value>
+  </data>
+  <data name="K084" xml:space="preserve">
+    <value>Either way, always keep the original shsh file locally!</value>
+  </data>
+  <data name="K085" xml:space="preserve">
+    <value>Select SHSH file(s)</value>
+  </data>
+  <data name="K086" xml:space="preserve">
+    <value>SHSH files (*.shsh;*.shsh2;*.plist)|*.shsh;*.shsh2;*.plist|All files (*.*)|*.*</value>
+  </data>
+  <data name="K087" xml:space="preserve">
+    <value>Checking path …</value>
+  </data>
+  <data name="K088" xml:space="preserve">
+    <value>Failed to resolve path</value>
+  </data>
+  <data name="K089" xml:space="preserve">
+    <value>No loadable SHSH files</value>
+  </data>
+  <data name="K090" xml:space="preserve">
+    <value>{0} files selected ({1} etc.)</value>
+  </data>
+  <data name="K091" xml:space="preserve">
+    <value> (product type not recognized; using selection above: {0})</value>
+  </data>
+  <data name="K092" xml:space="preserve">
+    <value>Cannot upload</value>
+  </data>
+  <data name="K093" xml:space="preserve">
+    <value>{0} files selected: {1} can be uploaded</value>
+  </data>
+  <data name="K094" xml:space="preserve">
+    <value>, {0} have problems</value>
+  </data>
+  <data name="K095" xml:space="preserve">
+    <value>, {0} use the model above</value>
+  </data>
+  <data name="K096" xml:space="preserve">
+    <value>{0} files in total, all can be uploaded</value>
+  </data>
+  <data name="K097" xml:space="preserve">
+    <value>Files using the model selected above:</value>
+  </data>
+  <data name="K098" xml:space="preserve">
+    <value>{0}…plus {1} more</value>
+  </data>
+  <data name="K099" xml:space="preserve">
+    <value>No files to upload</value>
+  </data>
+  <data name="K100" xml:space="preserve">
+    <value>Filename</value>
+  </data>
+  <data name="K101" xml:space="preserve">
+    <value>plist / filename</value>
+  </data>
+  <data name="K102" xml:space="preserve">
+    <value>The following backup will be uploaded to the i4 server:{0}{1}</value>
+  </data>
+  <data name="K103" xml:space="preserve">
+    <value>Product type: {0}{1}</value>
+  </data>
+  <data name="K104" xml:space="preserve">
+    <value>Version: {0}{1}{2}</value>
+  </data>
+  <data name="K105" xml:space="preserve">
+    <value>Product type and version come from {0}. Continue?</value>
+  </data>
+  <data name="K106" xml:space="preserve">
+    <value>Upload {0} files to the i4 server in order.</value>
+  </data>
+  <data name="K107" xml:space="preserve">
+    <value>{0}Also, {1} files will be skipped because their info is incomplete.</value>
+  </data>
+  <data name="K108" xml:space="preserve">
+    <value>{0}{1}Product type/version come from the filename or plist. Continue?</value>
+  </data>
+  <data name="K109" xml:space="preserve">
+    <value>Confirm upload</value>
+  </data>
+  <data name="K110" xml:space="preserve">
+    <value>Upload cancelled</value>
+  </data>
+  <data name="K111" xml:space="preserve">
+    <value>Uploading …</value>
+  </data>
+  <data name="K112" xml:space="preserve">
+    <value>Uploading {0}/{1}: {2} …</value>
+  </data>
+  <data name="K113" xml:space="preserve">
+    <value>Upload complete: {0} file(s) accepted by the server</value>
+  </data>
+  <data name="K114" xml:space="preserve">
+    <value>{0} succeeded</value>
+  </data>
+  <data name="K115" xml:space="preserve">
+    <value>, {0} skipped</value>
+  </data>
+  <data name="K116" xml:space="preserve">
+    <value>Upload finished: {0} succeeded, {1} failed</value>
+  </data>
+  <data name="K117" xml:space="preserve">
+    <value>, {0} skipped</value>
+  </data>
+  <data name="K118" xml:space="preserve">
+    <value>Upload timed out or was cancelled</value>
+  </data>
+  <data name="K119" xml:space="preserve">
+    <value>Upload failed</value>
+  </data>
+  <data name="K120" xml:space="preserve">
+    <value>All ProductTypes</value>
+  </data>
+  <data name="K121" xml:space="preserve">
+    <value>No models available</value>
+  </data>
+  <data name="K122" xml:space="preserve">
+    <value>Will query {0}</value>
+  </data>
+  <data name="K123" xml:space="preserve">
+    <value>Devices from A7 onward (including iPhone 5c) have no Cydia SHSH cache; use i4 query/download</value>
+  </data>
+  <data name="K124" xml:space="preserve">
+    <value>Invalid input: </value>
+  </data>
+  <data name="K125" xml:space="preserve">
+    <value>Select a model first</value>
+  </data>
+  <data name="K126" xml:space="preserve">
+    <value>Querying {0} · ECID {1} · {2} ProductTypes …</value>
+  </data>
+  <data name="K127" xml:space="preserve">
+    <value>Querying {0} ({1}/{2}) …</value>
+  </data>
+  <data name="K128" xml:space="preserve">
+    <value>Query timed out: server not responding or i4tool2.i4.cn unreachable</value>
+  </data>
+  <data name="K129" xml:space="preserve">
+    <value>Cancelled</value>
+  </data>
+  <data name="K130" xml:space="preserve">
+    <value>Query failed: </value>
+  </data>
+  <data name="K131" xml:space="preserve">
+    <value>Select a SHSH row first (or double-click a row to download)</value>
+  </data>
+  <data name="K132" xml:space="preserve">
+    <value>Save SHSH file</value>
+  </data>
+  <data name="K133" xml:space="preserve">
+    <value>SHSH files (*.shsh)|*.shsh|All files (*.*)|*.*</value>
+  </data>
+  <data name="K134" xml:space="preserve">
+    <value>Download failed: </value>
+  </data>
+  <data name="K135" xml:space="preserve">
+    <value>Saved: {0} ({1} bytes, {2:0} ms)</value>
+  </data>
+  <data name="K136" xml:space="preserve">
+    <value>Download timed out (90 s)</value>
+  </data>
+  <data name="K137" xml:space="preserve">
+    <value>Download cancelled</value>
+  </data>
+  <data name="K138" xml:space="preserve">
+    <value>Save failed: </value>
+  </data>
+  <data name="K139" xml:space="preserve">
+    <value>This record cannot be downloaded</value>
+  </data>
+  <data name="K140" xml:space="preserve">
+    <value>This device (A7 or later / iPhone 5c) has no Cydia SHSH cache; only i4 queries are supported</value>
+  </data>
+  <data name="K141" xml:space="preserve">
+    <value>Querying Cydia (ECID {0}) …</value>
+  </data>
+  <data name="K142" xml:space="preserve">
+    <value>Cydia query timed out: cydia.saurik.com unreachable</value>
+  </data>
+  <data name="K143" xml:space="preserve">
+    <value>Cydia query failed: </value>
+  </data>
+  <data name="K144" xml:space="preserve">
+    <value>Cydia uses decimal ECID and needs no signature: </value>
+  </data>
+  <data name="K145" xml:space="preserve">
+    <value>cydia (failed)</value>
+  </data>
+  <data name="K146" xml:space="preserve">
+    <value>Cydia query failed: {0} ({1} ms)</value>
+  </data>
+  <data name="K147" xml:space="preserve">
+    <value>Cydia query succeeded: {0} backups ({1} ms); use Download selected or Download all</value>
+  </data>
+  <data name="K148" xml:space="preserve">
+    <value>Cydia query succeeded: no backups for this ECID ({0} ms)</value>
+  </data>
+  <data name="K149" xml:space="preserve">
+    <value>No downloadable results</value>
+  </data>
+  <data name="K150" xml:space="preserve">
+    <value>Choose a folder to save SHSH files</value>
+  </data>
+  <data name="K151" xml:space="preserve">
+    <value>Preparing download {0}/{1}: {2} …</value>
+  </data>
+  <data name="K152" xml:space="preserve">
+    <value> ({0} duplicate names were suffixed with numbers)</value>
+  </data>
+  <data name="K153" xml:space="preserve">
+    <value>Download all complete: {0} files saved to {1}{2}</value>
+  </data>
+  <data name="K154" xml:space="preserve">
+    <value>Download all finished: {0} succeeded, {1} failed, saved to {2}{3}</value>
+  </data>
+  <data name="K155" xml:space="preserve">
+    <value>Some files failed to download</value>
+  </data>
+  <data name="K156" xml:space="preserve">
+    <value>Batch download timed out (10 minutes)</value>
+  </data>
+  <data name="K157" xml:space="preserve">
+    <value>Batch download cancelled</value>
+  </data>
+  <data name="K158" xml:space="preserve">
+    <value>Batch download failed: </value>
+  </data>
+  <data name="K159" xml:space="preserve">
+    <value>i4 (failed)</value>
+  </data>
+  <data name="K160" xml:space="preserve">
+    <value>Plaintext: </value>
+  </data>
+  <data name="K161" xml:space="preserve">
+    <value>Ciphertext: </value>
+  </data>
+  <data name="K162" xml:space="preserve">
+    <value>ECID: {0} (hex {1:x})  Model: {2}  ProductType: {3}</value>
+  </data>
+  <data name="K163" xml:space="preserve">
+    <value>Query succeeded: {0} · {1} ProductTypes, {2} SHSH backups ({3} ms); use Download selected or Download all</value>
+  </data>
+  <data name="K164" xml:space="preserve">
+    <value>Query succeeded: no backups for {0} · {1} ProductTypes ({2} ms)</value>
+  </data>
+  <data name="K165" xml:space="preserve">
+    <value>All failed: none of the {0} ProductTypes could be queried</value>
+  </data>
+  <data name="K166" xml:space="preserve">
+    <value>Partially failed: {0}/{1} ProductTypes queried, {2} records</value>
+  </data>
+  <data name="K167" xml:space="preserve">
+    <value>{0}; first error: {1} ({2} ms)</value>
+  </data>
+  <data name="K168" xml:space="preserve">
+    <value>Parsed as decimal: {0} (hex {1})</value>
+  </data>
+  <data name="K169" xml:space="preserve">
+    <value>ECID decimal: {0} (hex {1})</value>
+  </data>
+  <data name="K170" xml:space="preserve">
+    <value>Waiting for input; ECID accepts hex (e.g. 0011AABBCCDDEEFF) or decimal (e.g. 1234567890123, 13+ digits auto-detected)</value>
+  </data>
+  <data name="K171" xml:space="preserve">
+    <value>Invalid ECID: hex is at most 16 digits; decimal of 13+ digits is auto-detected (prefix hex digits with 0x)</value>
+  </data>
+  <data name="K172" xml:space="preserve">
+    <value>Ready: enter an ECID (hex), pick a model, then click Query Cydia.</value>
+  </data>
+  <data name="K173" xml:space="preserve">
+    <value>SHSH Checker (i4 / Cydia)</value>
+  </data>
+  <data name="K174" xml:space="preserve">
+    <value>ECID: {0} (hex {1:x})</value>
+  </data>
+  <data name="K175" xml:space="preserve">
+    <value>URL: </value>
+  </data>
+  <data name="K176" xml:space="preserve">
+    <value>ECID (hex)</value>
+  </data>
+  <data name="K177" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="K178" xml:space="preserve">
+    <value>ECID: {0}{1}</value>
+  </data>
+  <data name="K179" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="K180" xml:space="preserve">
+    <value>{0} - {1} ({2})</value>
+  </data>
+  <data name="K181" xml:space="preserve">
+    <value>{0} {1}: {2}</value>
+  </data>
+  <data name="K182" xml:space="preserve">
+    <value>{0} {1}: {2}</value>
+  </data>
+</root>
+

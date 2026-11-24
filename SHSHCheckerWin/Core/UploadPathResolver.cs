@@ -105,7 +105,7 @@ public static class UploadPathResolver
                 result.AddRange(folderFiles);
                 if (folderFiles.Count >= remaining && remaining > 0)
                 {
-                    problems.Add($"{path}：文件超过上限 {maxFiles} 个，已截断（请选更小的目录）");
+                    problems.Add(Strings.Format("K060", path, maxFiles));
                 }
 
                 continue;
@@ -116,11 +116,11 @@ public static class UploadPathResolver
                 && root.StartsWith(@"\\", StringComparison.Ordinal)
                 && !Directory.Exists(root))
             {
-                problems.Add($"{path}：网络路径不可达（检查共享名、凭据或网络）");
+                problems.Add(Strings.Format("K061", path));
             }
             else
             {
-                problems.Add($"{path}：文件不存在");
+                problems.Add(Strings.Format("K062", path));
             }
         }
 
@@ -147,14 +147,14 @@ public static class UploadPathResolver
                 .ToList();
             if (found.Count == 0)
             {
-                problems.Add($"{folder}：文件夹里没有 .shsh / .shsh2 / .plist");
+                problems.Add(Strings.Format("K063", folder));
             }
 
             return found;
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
-            problems.Add($"{folder}：无法读取文件夹（{ex.Message}）");
+            problems.Add(Strings.Format("K064", folder, ex.Message));
             return new List<string>();
         }
     }

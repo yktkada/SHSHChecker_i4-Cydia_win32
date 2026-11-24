@@ -81,7 +81,7 @@ public sealed record DeviceModel(
         && !ProductType.StartsWith("iPhone5,4", StringComparison.OrdinalIgnoreCase);
 
     public override string ToString() => HardwareModel.Length > 0
-        ? $"{MarketingName} - {ProductType}（{HardwareModel}）"
+        ? string.Format(Strings.Get("K180"), MarketingName, ProductType, HardwareModel)
         : $"{MarketingName} - {ProductType}";
 }
 
@@ -133,7 +133,16 @@ public static class DeviceCatalog
 
     /// <summary>单个变体是否应显示。</summary>
     public static bool IsVariantVisible(DeviceModel model, bool includeArm64, bool includeArm64e)
-        => !DeviceSoc.IsKnown(model.Soc) || IsTierVisible(model.Tier, includeArm64, includeArm64e);
+    {
+#if ENGLISH_LEGACY
+        // 英文精简版：只保留 32-bit（A4–A6X），并排除 iPhone 5c（Cydia 无缓存，容易误用）
+        return model.Tier == DeviceTier.Arm32
+               && !string.Equals(model.ProductType, "iPhone5,3", StringComparison.OrdinalIgnoreCase)
+               && !string.Equals(model.ProductType, "iPhone5,4", StringComparison.OrdinalIgnoreCase);
+#else
+        return !DeviceSoc.IsKnown(model.Soc) || IsTierVisible(model.Tier, includeArm64, includeArm64e);
+#endif
+    }
 
     /// <summary>某档位设备是否应显示。</summary>
     public static bool IsTierVisible(DeviceTier tier, bool includeArm64, bool includeArm64e) => tier switch
@@ -216,40 +225,40 @@ public static class DeviceCatalog
     private static DeviceModel[] BuildCurated() =>
     [
         // ---------- iPhone 3.5 英寸 ----------
-        new("iPhone 2G", "iPhone1,1", "M68AP", "iPhone", "3.5 英寸", "iPhone 2G"),
-        new("iPhone 3G", "iPhone1,2", "N82AP", "iPhone", "3.5 英寸", "iPhone 3G"),
-        new("iPhone 3GS", "iPhone2,1", "N88AP", "iPhone", "3.5 英寸", "iPhone 3GS"),
-        new("iPhone 4", "iPhone3,1", "N90AP", "iPhone", "3.5 英寸", "iPhone 4"),
-        new("iPhone 4 (Rev.A)", "iPhone3,2", "N90BAP", "iPhone", "3.5 英寸", "iPhone 4"),
-        new("iPhone 4 (CDMA)", "iPhone3,3", "N92AP", "iPhone", "3.5 英寸", "iPhone 4"),
-        new("iPhone 4S", "iPhone4,1", "N94AP", "iPhone", "3.5 英寸", "iPhone 4S"),
+        new("iPhone 2G", "iPhone1,1", "M68AP", "iPhone", Strings.Get("K015"), "iPhone 2G"),
+        new("iPhone 3G", "iPhone1,2", "N82AP", "iPhone", Strings.Get("K015"), "iPhone 3G"),
+        new("iPhone 3GS", "iPhone2,1", "N88AP", "iPhone", Strings.Get("K015"), "iPhone 3GS"),
+        new("iPhone 4", "iPhone3,1", "N90AP", "iPhone", Strings.Get("K015"), "iPhone 4"),
+        new("iPhone 4 (Rev.A)", "iPhone3,2", "N90BAP", "iPhone", Strings.Get("K015"), "iPhone 4"),
+        new("iPhone 4 (CDMA)", "iPhone3,3", "N92AP", "iPhone", Strings.Get("K015"), "iPhone 4"),
+        new("iPhone 4S", "iPhone4,1", "N94AP", "iPhone", Strings.Get("K015"), "iPhone 4S"),
 
         // ---------- iPhone 4 英寸 ----------
-        new("iPhone 5", "iPhone5,1", "N41AP", "iPhone", "4 英寸", "iPhone 5"),
-        new("iPhone 5", "iPhone5,2", "N42AP", "iPhone", "4 英寸", "iPhone 5"),
-        new("iPhone 5c", "iPhone5,3", "N48AP", "iPhone", "4 英寸", "iPhone 5c"),
-        new("iPhone 5c", "iPhone5,4", "N49AP", "iPhone", "4 英寸", "iPhone 5c"),
-        new("iPhone 5s", "iPhone6,1", "N51AP", "iPhone", "4 英寸", "iPhone 5s"),
-        new("iPhone 5s", "iPhone6,2", "N53AP", "iPhone", "4 英寸", "iPhone 5s"),
-        new("iPhone SE (第 1 代)", "iPhone8,4", "N69AP", "iPhone", "4 英寸", "iPhone SE (第 1 代)"),
+        new("iPhone 5", "iPhone5,1", "N41AP", "iPhone", Strings.Get("K016"), "iPhone 5"),
+        new("iPhone 5", "iPhone5,2", "N42AP", "iPhone", Strings.Get("K016"), "iPhone 5"),
+        new("iPhone 5c", "iPhone5,3", "N48AP", "iPhone", Strings.Get("K016"), "iPhone 5c"),
+        new("iPhone 5c", "iPhone5,4", "N49AP", "iPhone", Strings.Get("K016"), "iPhone 5c"),
+        new("iPhone 5s", "iPhone6,1", "N51AP", "iPhone", Strings.Get("K016"), "iPhone 5s"),
+        new("iPhone 5s", "iPhone6,2", "N53AP", "iPhone", Strings.Get("K016"), "iPhone 5s"),
+        new(Strings.Get("K017"), "iPhone8,4", "N69AP", "iPhone", Strings.Get("K016"), Strings.Get("K017")),
 
         // ---------- iPhone 4.7 英寸 ----------
-        new("iPhone 6", "iPhone7,2", "N61AP", "iPhone", "4.7 英寸", "iPhone 6"),
-        new("iPhone 6s", "iPhone8,1", "N71AP", "iPhone", "4.7 英寸", "iPhone 6s"),
-        new("iPhone 7", "iPhone9,1", "D10AP", "iPhone", "4.7 英寸", "iPhone 7"),
-        new("iPhone 7", "iPhone9,3", "D101AP", "iPhone", "4.7 英寸", "iPhone 7"),
-        new("iPhone 8", "iPhone10,1", "D20AP", "iPhone", "4.7 英寸", "iPhone 8"),
-        new("iPhone 8", "iPhone10,4", "D201AP", "iPhone", "4.7 英寸", "iPhone 8"),
-        new("iPhone SE (第 2 代)", "iPhone12,8", "D79AP", "iPhone", "4.7 英寸", "iPhone SE (第 2 代)"),
-        new("iPhone SE (第 3 代)", "iPhone14,6", "D49AP", "iPhone", "4.7 英寸", "iPhone SE (第 3 代)"),
+        new("iPhone 6", "iPhone7,2", "N61AP", "iPhone", Strings.Get("K018"), "iPhone 6"),
+        new("iPhone 6s", "iPhone8,1", "N71AP", "iPhone", Strings.Get("K018"), "iPhone 6s"),
+        new("iPhone 7", "iPhone9,1", "D10AP", "iPhone", Strings.Get("K018"), "iPhone 7"),
+        new("iPhone 7", "iPhone9,3", "D101AP", "iPhone", Strings.Get("K018"), "iPhone 7"),
+        new("iPhone 8", "iPhone10,1", "D20AP", "iPhone", Strings.Get("K018"), "iPhone 8"),
+        new("iPhone 8", "iPhone10,4", "D201AP", "iPhone", Strings.Get("K018"), "iPhone 8"),
+        new(Strings.Get("K019"), "iPhone12,8", "D79AP", "iPhone", Strings.Get("K018"), Strings.Get("K019")),
+        new(Strings.Get("K020"), "iPhone14,6", "D49AP", "iPhone", Strings.Get("K018"), Strings.Get("K020")),
 
         // ---------- iPhone 5.5 英寸 ----------
-        new("iPhone 6 Plus", "iPhone7,1", "N56AP", "iPhone", "5.5 英寸", "iPhone 6 Plus"),
-        new("iPhone 6s Plus", "iPhone8,2", "N66AP", "iPhone", "5.5 英寸", "iPhone 6s Plus"),
-        new("iPhone 7 Plus", "iPhone9,2", "D11AP", "iPhone", "5.5 英寸", "iPhone 7 Plus"),
-        new("iPhone 7 Plus", "iPhone9,4", "D111AP", "iPhone", "5.5 英寸", "iPhone 7 Plus"),
-        new("iPhone 8 Plus", "iPhone10,2", "D21AP", "iPhone", "5.5 英寸", "iPhone 8 Plus"),
-        new("iPhone 8 Plus", "iPhone10,5", "D211AP", "iPhone", "5.5 英寸", "iPhone 8 Plus"),
+        new("iPhone 6 Plus", "iPhone7,1", "N56AP", "iPhone", Strings.Get("K021"), "iPhone 6 Plus"),
+        new("iPhone 6s Plus", "iPhone8,2", "N66AP", "iPhone", Strings.Get("K021"), "iPhone 6s Plus"),
+        new("iPhone 7 Plus", "iPhone9,2", "D11AP", "iPhone", Strings.Get("K021"), "iPhone 7 Plus"),
+        new("iPhone 7 Plus", "iPhone9,4", "D111AP", "iPhone", Strings.Get("K021"), "iPhone 7 Plus"),
+        new("iPhone 8 Plus", "iPhone10,2", "D21AP", "iPhone", Strings.Get("K021"), "iPhone 8 Plus"),
+        new("iPhone 8 Plus", "iPhone10,5", "D211AP", "iPhone", Strings.Get("K021"), "iPhone 8 Plus"),
 
         // ---------- iPad 1024×768 ----------
         new("iPad 1", "iPad1,1", "K48AP", "iPad", "1024×768", "iPad 1"),
@@ -259,7 +268,7 @@ public static class DeviceCatalog
         new("iPad 2 (2012)", "iPad2,4", "K93AAP", "iPad", "1024×768", "iPad 2"),
         new("iPad mini 1 Wi-Fi", "iPad2,5", "P105AP", "iPad", "1024×768", "iPad mini 1"),
         new("iPad mini 1 Cellular", "iPad2,6", "P106AP", "iPad", "1024×768", "iPad mini 1"),
-        new("iPad mini 1 Cellular（中国大陆）", "iPad2,7", "P107AP", "iPad", "1024×768", "iPad mini 1"),
+        new(Strings.Get("K022"), "iPad2,7", "P107AP", "iPad", "1024×768", "iPad mini 1"),
 
         // ---------- iPad 2048×1536 ----------
         new("iPad 3 Wi-Fi", "iPad3,1", "J1AP", "iPad", "2048×1536", "iPad 3"),
@@ -267,7 +276,7 @@ public static class DeviceCatalog
         new("iPad 3 Cellular", "iPad3,3", "J2AAP", "iPad", "2048×1536", "iPad 3"),
         new("iPad 4 Wi-Fi", "iPad3,4", "P101AP", "iPad", "2048×1536", "iPad 4"),
         new("iPad 4 Cellular", "iPad3,5", "P102AP", "iPad", "2048×1536", "iPad 4"),
-        new("iPad 4 Cellular（中国大陆）", "iPad3,6", "P103AP", "iPad", "2048×1536", "iPad 4"),
+        new(Strings.Get("K023"), "iPad3,6", "P103AP", "iPad", "2048×1536", "iPad 4"),
         new("iPad Air Wi-Fi", "iPad4,1", "J71AP", "iPad", "2048×1536", "iPad Air"),
         new("iPad Air Cellular", "iPad4,2", "J72AP", "iPad", "2048×1536", "iPad Air"),
         new("iPad Air TD-LTE", "iPad4,3", "J73AP", "iPad", "2048×1536", "iPad Air"),
@@ -291,14 +300,15 @@ public static class DeviceCatalog
         new("iPad mini 5 Cellular", "iPad11,2", "J211AP", "iPad", "2048×1536", "iPad mini 5"),
 
         // ---------- iPod touch ----------
-        new("iPod touch (第 1 代)", "iPod1,1", "N45AP", "iPod", "3.5 英寸", "iPod touch 1"),
-        new("iPod touch (第 2 代)", "iPod2,1", "N72AP", "iPod", "3.5 英寸", "iPod touch 2"),
-        new("iPod touch (第 3 代)", "iPod3,1", "N18AP", "iPod", "3.5 英寸", "iPod touch 3"),
-        new("iPod touch (第 4 代)", "iPod4,1", "N81AP", "iPod", "3.5 英寸", "iPod touch 4"),
+        new(Strings.Get("K024"), "iPod1,1", "N45AP", "iPod", Strings.Get("K015"), "iPod touch 1"),
+        new(Strings.Get("K025"), "iPod2,1", "N72AP", "iPod", Strings.Get("K015"), "iPod touch 2"),
+        new(Strings.Get("K026"), "iPod3,1", "N18AP", "iPod", Strings.Get("K015"), "iPod touch 3"),
+        new(Strings.Get("K027"), "iPod4,1", "N81AP", "iPod", Strings.Get("K015"), "iPod touch 4"),
         // 第 5 代两个 HardwareModel 共用 iPod5,1（A1421 / A1509，不能只靠 ProductType 反推）
-        new("iPod touch (第 5 代)", "iPod5,1", "N78AP / N78aAP", "iPod", "4 英寸", "iPod touch 5"),
-        new("iPod touch (第 6 代)", "iPod7,1", "N102AP", "iPod", "4 英寸", "iPod touch 6"),
-        new("iPod touch (第 7 代)", "iPod9,1", "N112AP", "iPod", "4 英寸", "iPod touch 7"),
+        new(Strings.Get("K028"), "iPod5,1", "N78AP / N78aAP", "iPod", Strings.Get("K016"), "iPod touch 5"),
+        new(Strings.Get("K029"), "iPod7,1", "N102AP", "iPod", Strings.Get("K016"), "iPod touch 6"),
+        new(Strings.Get("K030"), "iPod9,1", "N112AP", "iPod", Strings.Get("K016"), "iPod touch 7"),
     ];
 }
+
 

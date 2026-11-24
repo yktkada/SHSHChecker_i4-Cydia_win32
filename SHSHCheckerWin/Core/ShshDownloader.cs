@@ -45,13 +45,13 @@ public static class ShshDownloader
             }
             catch (Exception ex)
             {
-                failures.Add($"{job.ProductType} {job.Ios}：{ex.Message}");
+                failures.Add(string.Format(Strings.Get("K181"), job.ProductType, job.Ios, ex.Message));
                 continue;
             }
 
             if (!content.Success || content.Content is null)
             {
-                failures.Add($"{job.ProductType} {job.Ios}：{content.Message}");
+                failures.Add(string.Format(Strings.Get("K182"), job.ProductType, job.Ios, content.Message));
                 continue;
             }
 
@@ -69,7 +69,7 @@ public static class ShshDownloader
             }
             catch (Exception ex)
             {
-                failures.Add($"{job.ProductType} {job.Ios}：保存失败 {ex.Message}");
+                failures.Add(Strings.Format("K052", job.ProductType, job.Ios, ex.Message));
             }
         }
 

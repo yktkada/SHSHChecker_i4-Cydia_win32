@@ -21,7 +21,11 @@ public sealed partial class MainForm
         root.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         root.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         root.RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
+#if ENGLISH_LEGACY
+        root.RowStyles.Add(new RowStyle(SizeType.Absolute, 0f));
+#else
         root.RowStyles.Add(new RowStyle(SizeType.Absolute, 100f));
+#endif
 
         _statusLabel.AutoSize = true;
         // F-4: 长结论（保存路径、重名提示）不能被窗口右边缘裁掉
@@ -33,10 +37,16 @@ public sealed partial class MainForm
         root.Controls.Add(BuildInputPanel(), 0, 0);
         root.Controls.Add(_statusLabel, 0, 1);
         root.Controls.Add(BuildResultPanel(), 0, 2);
+#if !ENGLISH_LEGACY
         root.Controls.Add(BuildUploadPanel(), 0, 3);
+#endif
         Controls.Add(root);
 
-        SetStatus("就绪：输入 ECID（hex），选择机型后点击查询。", Color.DimGray);
+#if ENGLISH_LEGACY
+        SetStatus(Strings.Get("K172"), Color.DimGray);
+#else
+        SetStatus(Strings.Get("K065"), Color.DimGray);
+#endif
     }
 
     private Control BuildInputPanel()
@@ -60,8 +70,8 @@ public sealed partial class MainForm
 
         _ecidBox.Dock = DockStyle.Fill;
         _ecidBox.Font = new Font("Consolas", 10.5F);
-        _ecidBox.PlaceholderText = "十六进制：0011AABBCCDDEEFF　或　十进制：1234567890123（13 位以上自动识别）";
-        grid.Controls.Add(MakeLabel("ECID（hex）"), 0, 0);
+        _ecidBox.PlaceholderText = Strings.Get("K066");
+        grid.Controls.Add(MakeLabel(Strings.Get("K176")), 0, 0);
         grid.Controls.Add(_ecidBox, 1, 0);
 
         // 实时十进制预览 / 格式提示
@@ -88,17 +98,17 @@ public sealed partial class MainForm
         _productTypeCombo.DropDownStyle = ComboBoxStyle.DropDownList;
         _productTypeCombo.MaxDropDownItems = 22;
 
-        selectorRow.Controls.Add(MakeSelectorCell("机型（大类）", _modelCombo, new Padding(0, 0, 4, 0)), 0, 0);
+        selectorRow.Controls.Add(MakeSelectorCell(Strings.Get("K067"), _modelCombo, new Padding(0, 0, 4, 0)), 0, 0);
         selectorRow.Controls.Add(MakeSelectorCell("ProductType", _productTypeCombo, new Padding(4, 0, 0, 0)), 1, 0);
 
         grid.Controls.Add(selectorRow, 1, 2);
 
         // 64bit 设备开关：默认只显示 32bit；勾 arm64 才能勾 arm64e
-        _arm64Check.Text = "启用 arm64 设备查询";
+        _arm64Check.Text = Strings.Get("K068");
         _arm64Check.AutoSize = true;
         _arm64Check.Margin = new Padding(3, 4, 16, 2);
 
-        _arm64eCheck.Text = "启用 arm64e 设备查询";
+        _arm64eCheck.Text = Strings.Get("K069");
         _arm64eCheck.AutoSize = true;
         _arm64eCheck.Enabled = false;
         _arm64eCheck.Margin = new Padding(0, 4, 3, 2);
@@ -109,8 +119,10 @@ public sealed partial class MainForm
             WrapContents = false,
             Margin = new Padding(0, 2, 0, 0),
         };
+#if !ENGLISH_LEGACY
         archRow.Controls.Add(_arm64Check);
         archRow.Controls.Add(_arm64eCheck);
+#endif
         grid.Controls.Add(archRow, 1, 3);
 
         _modelHint.AutoSize = false;
@@ -121,25 +133,25 @@ public sealed partial class MainForm
         _modelHint.Margin = new Padding(3, 2, 3, 2);
         grid.Controls.Add(_modelHint, 1, 4);
 
-        _queryButton.Text = "查询爱思 SHSH 备份";
+        _queryButton.Text = Strings.Get("K070");
         _queryButton.AutoSize = true;
         _queryButton.Padding = new Padding(12, 4, 12, 4);
         _queryButton.UseVisualStyleBackColor = true;
 
-        _cydiaButton.Text = "查询 Cydia 备份";
+        _cydiaButton.Text = Strings.Get("K071");
         _cydiaButton.AutoSize = true;
         _cydiaButton.Padding = new Padding(10, 4, 10, 4);
         _cydiaButton.UseVisualStyleBackColor = true;
         _cydiaButton.Margin = new Padding(8, 0, 0, 0);
 
-        _downloadButton.Text = "下载选中";
+        _downloadButton.Text = Strings.Get("K072");
         _downloadButton.AutoSize = true;
         _downloadButton.Padding = new Padding(10, 4, 10, 4);
         _downloadButton.UseVisualStyleBackColor = true;
         _downloadButton.Enabled = false;
         _downloadButton.Margin = new Padding(8, 0, 0, 0);
 
-        _downloadAllButton.Text = "全部下载";
+        _downloadAllButton.Text = Strings.Get("K073");
         _downloadAllButton.AutoSize = true;
         _downloadAllButton.Padding = new Padding(10, 4, 10, 4);
         _downloadAllButton.UseVisualStyleBackColor = true;
@@ -152,7 +164,11 @@ public sealed partial class MainForm
             WrapContents = false,
             Margin = new Padding(0, 6, 0, 0),
         };
+#if !ENGLISH_LEGACY
         buttons.Controls.Add(_queryButton);
+#else
+        _cydiaButton.Margin = new Padding(0, 0, 0, 0);
+#endif
         buttons.Controls.Add(_cydiaButton);
         buttons.Controls.Add(_downloadButton);
         buttons.Controls.Add(_downloadAllButton);
@@ -206,16 +222,16 @@ public sealed partial class MainForm
         _listView.GridLines = true;
         _listView.HideSelection = false;
         _listView.Dock = DockStyle.Fill;
-        _listView.Columns.Add("来源", 56);
+        _listView.Columns.Add(Strings.Get("K074"), 56);
         _listView.Columns.Add("ProductType / Model", 150);
-        _listView.Columns.Add("iOS 版本", 110);
-        _listView.Columns.Add("其他信息", 700);
+        _listView.Columns.Add(Strings.Get("K075"), 110);
+        _listView.Columns.Add(Strings.Get("K076"), 700);
         _listView.Resize += (_, _) => AdjustResultColumns();
         _split.Panel1.Controls.Add(_listView);
 
         var tabs = new TabControl { Dock = DockStyle.Fill };
 
-        var rawTab = new TabPage("原始响应");
+        var rawTab = new TabPage(Strings.Get("K077"));
         _rawBox.Dock = DockStyle.Fill;
         _rawBox.ReadOnly = true;
         _rawBox.Font = new Font("Consolas", 9F);
@@ -225,7 +241,7 @@ public sealed partial class MainForm
         _rawBox.DetectUrls = false;
         rawTab.Controls.Add(_rawBox);
 
-        var paramTab = new TabPage("请求参数");
+        var paramTab = new TabPage(Strings.Get("K078"));
         _paramBox.Dock = DockStyle.Fill;
         _paramBox.Multiline = true;
         _paramBox.ReadOnly = true;
@@ -261,6 +277,8 @@ public sealed partial class MainForm
         _listView.Columns[3].Width = Math.Max(200, _listView.ClientSize.Width - used - 4);
     }
 }
+
+
 
 
 

@@ -106,11 +106,11 @@ public sealed class CydiaClient : IDisposable
         }
         catch (TaskCanceledException) when (!ct.IsCancellationRequested)
         {
-            return Fail("请求超时（服务器无响应，或本机网络无法访问 cydia.saurik.com）", "", url, sw.Elapsed);
+            return Fail(Strings.Get("K001"), "", url, sw.Elapsed);
         }
         catch (HttpRequestException ex)
         {
-            return Fail("网络错误：" + ex.Message, "", url, sw.Elapsed);
+            return Fail(Strings.Get("K002") + ex.Message, "", url, sw.Elapsed);
         }
 
         sw.Stop();
@@ -132,7 +132,7 @@ public sealed class CydiaClient : IDisposable
             return new CydiaDownloadResult
             {
                 Success = false,
-                Message = "该记录缺少 build / chip / board，无法下载",
+                Message = Strings.Get("K003"),
                 ManifestUrl = manifestUrl,
                 Elapsed = sw.Elapsed,
             };
@@ -149,7 +149,7 @@ public sealed class CydiaClient : IDisposable
                 return new CydiaDownloadResult
                 {
                     Success = false,
-                    Message = $"取 BuildManifest 失败（HTTP {(int)manifestResponse.StatusCode}）",
+                    Message = Strings.Format("K004", (int)manifestResponse.StatusCode),
                     ManifestUrl = manifestUrl,
                     RawResponse = manifest,
                     Elapsed = sw.Elapsed,
@@ -161,7 +161,7 @@ public sealed class CydiaClient : IDisposable
             return new CydiaDownloadResult
             {
                 Success = false,
-                Message = "取 BuildManifest 超时",
+                Message = Strings.Get("K005"),
                 ManifestUrl = manifestUrl,
                 Elapsed = sw.Elapsed,
             };
@@ -171,7 +171,7 @@ public sealed class CydiaClient : IDisposable
             return new CydiaDownloadResult
             {
                 Success = false,
-                Message = "网络错误：" + ex.Message,
+                Message = Strings.Get("K002") + ex.Message,
                 ManifestUrl = manifestUrl,
                 Elapsed = sw.Elapsed,
             };
@@ -205,7 +205,7 @@ public sealed class CydiaClient : IDisposable
             return new CydiaDownloadResult
             {
                 Success = false,
-                Message = "请求 Cydia TSS 超时",
+                Message = Strings.Get("K006"),
                 ManifestUrl = manifestUrl,
                 Elapsed = sw.Elapsed,
             };
@@ -215,7 +215,7 @@ public sealed class CydiaClient : IDisposable
             return new CydiaDownloadResult
             {
                 Success = false,
-                Message = "网络错误：" + ex.Message,
+                Message = Strings.Get("K002") + ex.Message,
                 ManifestUrl = manifestUrl,
                 Elapsed = sw.Elapsed,
             };
@@ -228,7 +228,7 @@ public sealed class CydiaClient : IDisposable
             return new CydiaDownloadResult
             {
                 Success = false,
-                Message = $"Cydia TSS 返回 HTTP {httpCode} {httpReason}".Trim(),
+                Message = Strings.Format("K007", httpCode, httpReason).Trim(),
                 ManifestUrl = manifestUrl,
                 RawResponse = raw,
                 Elapsed = sw.Elapsed,
@@ -255,7 +255,7 @@ public sealed class CydiaClient : IDisposable
             return new CydiaDownloadResult
             {
                 Success = false,
-                Message = "返回里没有找到 plist 内容",
+                Message = Strings.Get("K008"),
                 ManifestUrl = manifestUrl,
                 RawResponse = raw,
                 Elapsed = sw.Elapsed,
@@ -270,7 +270,7 @@ public sealed class CydiaClient : IDisposable
             return new CydiaDownloadResult
             {
                 Success = false,
-                Message = "返回的 plist 里没有有效的 APTicket，不是可用的 SHSH 备份",
+                Message = Strings.Get("K009"),
                 ManifestUrl = manifestUrl,
                 RawResponse = raw,
                 Elapsed = sw.Elapsed,
@@ -326,7 +326,7 @@ public sealed class CydiaClient : IDisposable
             return Uri.UnescapeDataString(message.Groups[1].Value.Trim().Replace('+', ' '));
         }
 
-        return status.Success ? $"Cydia 返回 STATUS={status.Groups[1].Value}" : "Cydia 拒绝了该请求";
+        return status.Success ? Strings.Format("K010", status.Groups[1].Value) : Strings.Get("K011");
     }
 
     /// <summary>解析 Cydia 返回的 JSON 数组。</summary>
@@ -335,7 +335,7 @@ public sealed class CydiaClient : IDisposable
         raw = raw.Trim();
         if (raw.Length == 0)
         {
-            return Fail("服务器返回空内容", raw, url, elapsed);
+            return Fail(Strings.Get("K012"), raw, url, elapsed);
         }
 
         try
@@ -345,7 +345,7 @@ public sealed class CydiaClient : IDisposable
 
             if (root.ValueKind != JsonValueKind.Array)
             {
-                return Fail("返回内容不是 JSON 数组", raw, url, elapsed);
+                return Fail(Strings.Get("K013"), raw, url, elapsed);
             }
 
             var items = new List<CydiaBackup>();
@@ -383,7 +383,7 @@ public sealed class CydiaClient : IDisposable
         catch (JsonException)
         {
             var preview = raw.Length > 300 ? raw[..300] + "…" : raw;
-            return Fail("返回内容不是 JSON（可能被风控或网关拦截）：" + preview, raw, url, elapsed);
+            return Fail(Strings.Get("K014") + preview, raw, url, elapsed);
         }
     }
 

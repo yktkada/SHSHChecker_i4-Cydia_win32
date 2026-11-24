@@ -111,11 +111,11 @@ public sealed class I4Client : IDisposable
         }
         catch (TaskCanceledException) when (!ct.IsCancellationRequested)
         {
-            return Fail("请求超时（服务器无响应，或本机网络无法访问 i4tool2.i4.cn）", "", json, cipher, url, sw.Elapsed);
+            return Fail(Strings.Get("K036"), "", json, cipher, url, sw.Elapsed);
         }
         catch (HttpRequestException ex)
         {
-            return Fail("网络错误：" + ex.Message, "", json, cipher, url, sw.Elapsed);
+            return Fail(Strings.Get("K002") + ex.Message, "", json, cipher, url, sw.Elapsed);
         }
 
         sw.Stop();
@@ -207,7 +207,7 @@ public sealed class I4Client : IDisposable
         {
             return new I4UploadResult(
                 false,
-                "shsh2 文件里没有 APNonce（ticket 的 BNCH），无法上传",
+                Strings.Get("K037"),
                 string.Empty,
                 string.Empty,
                 string.Empty,
@@ -225,8 +225,8 @@ public sealed class I4Client : IDisposable
         if (code is "[1]" or "1")
         {
             return success
-                ? "服务器已接受该备份"
-                : "服务器拒绝该备份（可能格式或内容不被接受、该版本已不受支持，或触发风控）";
+                ? Strings.Get("K038")
+                : Strings.Get("K039");
         }
 
         return rawMessage;
@@ -273,11 +273,11 @@ public sealed class I4Client : IDisposable
         }
         catch (OperationCanceledException)
         {
-            return new I4UploadResult(false, "上传超时", json, url, string.Empty, sw.Elapsed);
+            return new I4UploadResult(false, Strings.Get("K040"), json, url, string.Empty, sw.Elapsed);
         }
         catch (Exception ex)
         {
-            return new I4UploadResult(false, "网络错误：" + ex.Message, json, url, ex.ToString(), sw.Elapsed);
+            return new I4UploadResult(false, Strings.Get("K002") + ex.Message, json, url, ex.ToString(), sw.Elapsed);
         }
     }
 
@@ -356,7 +356,7 @@ public sealed class I4Client : IDisposable
                 return new ShshDownloadResult
                 {
                     Success = false,
-                    Message = $"服务器返回空内容（HTTP {(int)response.StatusCode}）",
+                    Message = Strings.Format("K041", (int)response.StatusCode),
                     RequestUrl = url,
                     PayloadJson = json,
                     CipherBase64 = cipher,
@@ -377,7 +377,7 @@ public sealed class I4Client : IDisposable
                 return new ShshDownloadResult
                 {
                     Success = false,
-                    Message = $"HTTP {(int)response.StatusCode} {response.ReasonPhrase}（{bytes.Length} 字节）",
+                    Message = Strings.Format("K042", (int)response.StatusCode, response.ReasonPhrase, bytes.Length),
                     RequestUrl = url,
                     PayloadJson = json,
                     CipherBase64 = cipher,
@@ -415,12 +415,12 @@ public sealed class I4Client : IDisposable
         catch (TaskCanceledException) when (!ct.IsCancellationRequested)
         {
             sw.Stop();
-            return FailDownload("下载超时（服务器无响应，或本机网络无法访问 i4tool2.i4.cn）", json, cipher, url, sw.Elapsed);
+            return FailDownload(Strings.Get("K043"), json, cipher, url, sw.Elapsed);
         }
         catch (HttpRequestException ex)
         {
             sw.Stop();
-            return FailDownload("网络错误：" + ex.Message, json, cipher, url, sw.Elapsed);
+            return FailDownload(Strings.Get("K002") + ex.Message, json, cipher, url, sw.Elapsed);
         }
     }
 
@@ -556,7 +556,7 @@ public sealed class I4Client : IDisposable
                 return new ShshDownloadResult
                 {
                     Success = false,
-                    Message = $"返回内容不是 JSON 对象（{root.ValueKind}）",
+                    Message = Strings.Format("K044", root.ValueKind),
                     RequestUrl = url,
                     PayloadJson = payloadJson,
                     CipherBase64 = cipher,
@@ -589,7 +589,7 @@ public sealed class I4Client : IDisposable
             return new ShshDownloadResult
             {
                 Success = false,
-                Message = MessageOf(root) ?? "服务器没有返回 shsh 内容",
+                Message = MessageOf(root) ?? Strings.Get("K045"),
                 RequestUrl = url,
                 PayloadJson = payloadJson,
                 CipherBase64 = cipher,
@@ -603,7 +603,7 @@ public sealed class I4Client : IDisposable
             return new ShshDownloadResult
             {
                 Success = false,
-                Message = "返回内容不是有效 JSON",
+                Message = Strings.Get("K046"),
                 RequestUrl = url,
                 PayloadJson = payloadJson,
                 CipherBase64 = cipher,
@@ -629,7 +629,7 @@ public sealed class I4Client : IDisposable
         }
 
         var code = ReadScalar(root, "code") ?? ReadScalar(root, "co");
-        return string.IsNullOrWhiteSpace(code) ? null : $"服务器返回 code={code}";
+        return string.IsNullOrWhiteSpace(code) ? null : Strings.Format("K047", code);
     }
 
     private static ShshDownloadResult FailDownload(string message, string json, string cipher, string url, TimeSpan elapsed) => new()
@@ -648,7 +648,7 @@ public sealed class I4Client : IDisposable
         raw = raw.Trim();
         if (raw.Length == 0)
         {
-            return Fail("服务器返回空内容", raw, json, cipher, url, elapsed);
+            return Fail(Strings.Get("K012"), raw, json, cipher, url, elapsed);
         }
 
         JsonDocument doc;
@@ -659,7 +659,7 @@ public sealed class I4Client : IDisposable
         catch (JsonException)
         {
             var preview = raw.Length > 300 ? raw[..300] + "…" : raw;
-            return Fail("返回内容不是 JSON（可能被风控或网关拦截）：" + preview, raw, json, cipher, url, elapsed);
+            return Fail(Strings.Get("K014") + preview, raw, json, cipher, url, elapsed);
         }
 
         using (doc)
@@ -667,7 +667,7 @@ public sealed class I4Client : IDisposable
             var root = doc.RootElement;
             if (root.ValueKind != JsonValueKind.Object)
             {
-                return Fail("返回内容不是 JSON 对象", raw, json, cipher, url, elapsed);
+                return Fail(Strings.Get("K048"), raw, json, cipher, url, elapsed);
             }
 
             var code = ReadScalar(root, "code") ?? ReadScalar(root, "status") ?? ReadScalar(root, "co");
@@ -727,7 +727,7 @@ public sealed class I4Client : IDisposable
                 return new I4QueryResult
                 {
                     Success = true,
-                    Message = message.Length > 0 ? message : "服务器返回 success=true，但没有备份记录",
+                    Message = message.Length > 0 ? message : Strings.Get("K049"),
                     Code = code,
                     RawResponse = raw,
                     RequestUrl = url,
@@ -743,8 +743,8 @@ public sealed class I4Client : IDisposable
                 Message = message.Length > 0
                     ? message
                     : successFlag == false
-                        ? "服务器返回 success=false（签名或参数被拒绝）"
-                        : "接口没有返回 list 字段",
+                        ? Strings.Get("K050")
+                        : Strings.Get("K051"),
                 Code = code,
                 RawResponse = raw,
                 RequestUrl = url,

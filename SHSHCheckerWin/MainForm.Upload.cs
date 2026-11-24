@@ -29,7 +29,7 @@ public sealed partial class MainForm
 
         var label = new Label
         {
-            Text = "上传 SHSH",
+            Text = Strings.Get("K079"),
             AutoSize = true,
             Margin = new Padding(3, 7, 6, 3),
             TextAlign = ContentAlignment.MiddleLeft,
@@ -51,14 +51,14 @@ public sealed partial class MainForm
         _upFileBox.PlaceholderText = string.Empty;
         fileCell.Controls.Add(_upFileBox, 0, 0);
 
-        _upBrowseButton.Text = "浏览…";
+        _upBrowseButton.Text = Strings.Get("K080");
         _upBrowseButton.AutoSize = true;
         _upBrowseButton.Margin = new Padding(6, 0, 0, 0);
         fileCell.Controls.Add(_upBrowseButton, 1, 0);
 
         grid.Controls.Add(fileCell, 1, 0);
 
-        _upButton.Text = "上传到爱思服务器";
+        _upButton.Text = Strings.Get("K081");
         _upButton.AutoSize = true;
         _upButton.Margin = new Padding(8, 0, 0, 0);
         grid.Controls.Add(_upButton, 2, 0);
@@ -87,7 +87,7 @@ public sealed partial class MainForm
 
         var hintModern = new Label
         {
-            Text = "现代设备：请先用 Blobsaver 保存 SHSH，再选择文件上传。",
+            Text = Strings.Get("K082"),
             AutoSize = true,
             ForeColor = Color.DimGray,
             Margin = new Padding(0),
@@ -96,7 +96,7 @@ public sealed partial class MainForm
 
         var hintLegacy = new Label
         {
-            Text = "iOS 11 及以下：上传后可能被精简。",
+            Text = Strings.Get("K083"),
             AutoSize = true,
             ForeColor = Color.DimGray,
             Margin = new Padding(0),
@@ -105,7 +105,7 @@ public sealed partial class MainForm
 
         var hintKeep = new Label
         {
-            Text = "无论如何，都应该在本地保存有效的 shsh 原件！",
+            Text = Strings.Get("K084"),
             AutoSize = true,
             ForeColor = Color.FromArgb(0xC0, 0x00, 0x00),
             Margin = new Padding(0),
@@ -126,8 +126,8 @@ public sealed partial class MainForm
     {
         using var dialog = new OpenFileDialog
         {
-            Title = "选择 SHSH 文件（可多选）",
-            Filter = "SHSH 文件 (*.shsh;*.shsh2;*.plist)|*.shsh;*.shsh2;*.plist|所有文件 (*.*)|*.*",
+            Title = Strings.Get("K085"),
+            Filter = Strings.Get("K086"),
             CheckFileExists = true,
             Multiselect = true,
         };
@@ -191,7 +191,7 @@ public sealed partial class MainForm
         }
 
         var token = ++_uploadResolveToken;
-        SetUploadStatus("正在检查路径 …", Color.FromArgb(0x33, 0x33, 0x33));
+        SetUploadStatus(Strings.Get("K087"), Color.FromArgb(0x33, 0x33, 0x33));
 
         List<string> files;
         List<string> problems;
@@ -207,7 +207,7 @@ public sealed partial class MainForm
         {
             if (!_closing && token == _uploadResolveToken)
             {
-                SetUploadStatus("路径解析失败", Color.Firebrick);
+                SetUploadStatus(Strings.Get("K088"), Color.Firebrick);
                 _toolTip.SetToolTip(_upStatusLabel, ex.Message);
             }
 
@@ -225,7 +225,7 @@ public sealed partial class MainForm
             _uploadFiles.Clear();
             _uploadInfos.Clear();
             _uploadStamps.Clear();
-            SetUploadStatus(problems.Count > 0 ? problems[0] : "没有可加载的 SHSH 文件", Color.Firebrick);
+            SetUploadStatus(problems.Count > 0 ? problems[0] : Strings.Get("K089"), Color.Firebrick);
             _toolTip.SetToolTip(_upStatusLabel, string.Join(Environment.NewLine, problems));
             UpdateUploadButton();
             return;
@@ -255,7 +255,7 @@ public sealed partial class MainForm
             {
                 0 => string.Empty,
                 1 => _uploadFiles[0],
-                _ => $"已选择 {_uploadFiles.Count} 个文件（{Path.GetFileName(_uploadFiles[0])} 等）",
+                _ => Strings.Format("K090", _uploadFiles.Count, Path.GetFileName(_uploadFiles[0])),
             };
         }
         finally
@@ -410,7 +410,7 @@ public sealed partial class MainForm
             }
             else
             {
-                problems.Add($"{Path.GetFileName(path)}：{reason}");
+                problems.Add(string.Format(Strings.Get("K177"), Path.GetFileName(path), reason));
             }
         }
 
@@ -428,13 +428,13 @@ public sealed partial class MainForm
                 SetUploadStatus(
                     $"{resolved.ProductType} · {resolved.IosLabel} · ECID {resolved.Ecid}"
                     + (resolved.IsShsh2 ? " · shsh2" : string.Empty)
-                    + (manual ? $"（未识别机型，使用上方选择：{resolved.ProductType}）" : string.Empty),
+                    + (manual ? Strings.Format("K091", resolved.ProductType) : string.Empty),
                     manual ? Color.FromArgb(0x8A, 0x6D, 0x00) : Color.DimGray);
             }
             else
             {
                 SetUploadStatus(
-                    problems[0].Contains('：') ? problems[0][(problems[0].IndexOf('：') + 1)..] : "无法上传",
+                    SplitReason(problems[0]),
                     Color.FromArgb(0x8A, 0x6D, 0x00));
             }
 
@@ -443,22 +443,22 @@ public sealed partial class MainForm
         else
         {
             SetUploadStatus(
-                $"已选 {_uploadFiles.Count} 个文件：{ready} 个可上传"
-                + (problems.Count > 0 ? $"，{problems.Count} 个有问题" : string.Empty)
-                + (manualUsed.Count > 0 ? $"，{manualUsed.Count} 个使用上方机型" : string.Empty),
+                Strings.Format("K093", _uploadFiles.Count, ready)
+                + (problems.Count > 0 ? Strings.Format("K094", problems.Count) : string.Empty)
+                + (manualUsed.Count > 0 ? Strings.Format("K095", manualUsed.Count) : string.Empty),
                 ready > 0
                     ? (manualUsed.Count > 0 ? Color.FromArgb(0x8A, 0x6D, 0x00) : Color.DimGray)
                     : Color.FromArgb(0x8A, 0x6D, 0x00));
             _toolTip.SetToolTip(
                 _upStatusLabel,
                 problems.Count == 0
-                    ? $"共 {_uploadFiles.Count} 个文件，全部可上传"
+                    ? Strings.Format("K096", _uploadFiles.Count)
                       + (manualUsed.Count > 0
-                          ? Environment.NewLine + "使用上方选择框机型的文件：" + Environment.NewLine
+                          ? Environment.NewLine + Strings.Get("K097") + Environment.NewLine
                             + string.Join(Environment.NewLine, manualUsed.Take(10))
                           : string.Empty)
                     : string.Join(Environment.NewLine, problems.Take(15))
-                      + (problems.Count > 15 ? $"{Environment.NewLine}…另有 {problems.Count - 15} 个" : string.Empty));
+                      + (problems.Count > 15 ? Strings.Format("K098", Environment.NewLine, problems.Count - 15) : string.Empty));
         }
 
         UpdateUploadButton();
@@ -537,7 +537,7 @@ public sealed partial class MainForm
 
         if (jobs.Count == 0)
         {
-            SetUploadStatus("没有可上传的文件", Color.Firebrick);
+            SetUploadStatus(Strings.Get("K099"), Color.Firebrick);
             return;
         }
 
@@ -546,23 +546,23 @@ public sealed partial class MainForm
         if (jobs.Count == 1)
         {
             var only = jobs[0].Info;
-            var source = only.IsShsh2 ? "文件名" : "plist / 文件名";
-            body = $"将把下面这条备份上传到爱思服务器：{Environment.NewLine}{Environment.NewLine}"
-                   + $"ECID：{only.Ecid}{Environment.NewLine}"
-                   + $"机型：{only.ProductType}{Environment.NewLine}"
-                   + $"版本：{only.IosLabel}{Environment.NewLine}{Environment.NewLine}"
-                   + $"机型与版本取自{source}，请确认无误。继续上传？";
+            var source = only.IsShsh2 ? Strings.Get("K100") : Strings.Get("K101");
+            body = Strings.Format("K102", Environment.NewLine, Environment.NewLine)
+                   + string.Format(Strings.Get("K178"), only.Ecid, Environment.NewLine)
+                   + Strings.Format("K103", only.ProductType, Environment.NewLine)
+                   + Strings.Format("K104", only.IosLabel, Environment.NewLine, Environment.NewLine)
+                   + Strings.Format("K105", source);
         }
         else
         {
-            body = $"将按顺序上传 {jobs.Count} 个文件到爱思服务器。"
-                   + (skipped > 0 ? $"{Environment.NewLine}另有 {skipped} 个文件因信息不全会跳过。" : string.Empty)
-                   + $"{Environment.NewLine}{Environment.NewLine}机型/版本取自文件名或 plist，请确认无误。继续上传？";
+            body = Strings.Format("K106", jobs.Count)
+                   + (skipped > 0 ? Strings.Format("K107", Environment.NewLine, skipped) : string.Empty)
+                   + Strings.Format("K108", Environment.NewLine, Environment.NewLine);
         }
 
-        if (MessageBox.Show(this, body, "确认上传", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
+        if (MessageBox.Show(this, body, Strings.Get("K109"), MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
         {
-            SetUploadStatus("已取消上传", Color.DimGray);
+            SetUploadStatus(Strings.Get("K110"), Color.DimGray);
             return;
         }
 
@@ -581,8 +581,8 @@ public sealed partial class MainForm
                 uploadCts.Token.ThrowIfCancellationRequested();
                 SetUploadStatus(
                     jobs.Count == 1
-                        ? "正在上传 …"
-                        : $"正在上传 {i + 1}/{jobs.Count}：{Path.GetFileName(jobs[i].Path)} …",
+                        ? Strings.Get("K111")
+                        : Strings.Format("K112", i + 1, jobs.Count, Path.GetFileName(jobs[i].Path)),
                     Color.FromArgb(0x33, 0x33, 0x33));
 
                 var result = await _client.UploadShshFileAsync(jobs[i].Info, jobs[i].Content, uploadCts.Token);
@@ -592,19 +592,19 @@ public sealed partial class MainForm
                 }
                 else
                 {
-                    failures.Add($"{Path.GetFileName(jobs[i].Path)}：{result.Message}");
+                    failures.Add(string.Format(Strings.Get("K179"), Path.GetFileName(jobs[i].Path), result.Message));
                 }
             }
 
             if (failures.Count == 0)
             {
-                SetUploadStatus($"上传成功：{succeeded} 个文件（服务器已接受）", Color.FromArgb(0x1B, 0x6E, 0x2F));
-                _toolTip.SetToolTip(_upStatusLabel, $"成功 {succeeded} 个" + (skipped > 0 ? $"，跳过 {skipped} 个" : string.Empty));
+                SetUploadStatus(Strings.Format("K113", succeeded), Color.FromArgb(0x1B, 0x6E, 0x2F));
+                _toolTip.SetToolTip(_upStatusLabel, Strings.Format("K114", succeeded) + (skipped > 0 ? Strings.Format("K115", skipped) : string.Empty));
             }
             else
             {
                 SetUploadStatus(
-                    $"上传完成：成功 {succeeded}，失败 {failures.Count}" + (skipped > 0 ? $"，跳过 {skipped}" : string.Empty),
+                    Strings.Format("K116", succeeded, failures.Count) + (skipped > 0 ? Strings.Format("K117", skipped) : string.Empty),
                     Color.Firebrick);
                 _toolTip.SetToolTip(_upStatusLabel, string.Join(Environment.NewLine, failures.Take(15)));
                 _rawBox.Text = string.Join(Environment.NewLine, failures);
@@ -612,7 +612,7 @@ public sealed partial class MainForm
         }
         catch (OperationCanceledException) when (!_closing)
         {
-            SetUploadStatus("上传超时或已取消", Color.Firebrick);
+            SetUploadStatus(Strings.Get("K118"), Color.Firebrick);
         }
         catch (OperationCanceledException)
         {
@@ -622,7 +622,7 @@ public sealed partial class MainForm
         {
             if (!_closing)
             {
-                SetUploadStatus("上传失败", Color.Firebrick);
+                SetUploadStatus(Strings.Get("K119"), Color.Firebrick);
                 _toolTip.SetToolTip(_upStatusLabel, ex.Message);
             }
         }
@@ -638,12 +638,20 @@ public sealed partial class MainForm
         }
     }
 
+    /// <summary>从「文件名：原因」里取原因部分（中文全角冒号与英文半角冒号都支持）。</summary>
+    private static string SplitReason(string message)
+    {
+        var idx = message.IndexOfAny(['：', ':']);
+        return idx >= 0 && idx + 1 < message.Length ? message[(idx + 1)..].TrimStart() : Strings.Get("K092");
+    }
+
     private void SetUploadStatus(string text, Color color)
     {
         _upStatusLabel.Text = text;
         _upStatusLabel.ForeColor = color;
     }
 }
+
 
 
 
