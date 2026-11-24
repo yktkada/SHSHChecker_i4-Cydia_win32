@@ -177,17 +177,22 @@ public sealed partial class MainForm
         return grid;
     }
 
-    /// <summary>构造「标签在上、下拉框在下」的一格；两格宽度相同，保证下拉框始终平分。</summary>
+    /// <summary>
+    /// 构造「标签在上、下拉框在下」的一格。
+    /// 列宽用 100% 让下拉框横向填满整格，配合外层 50/50 的两列，保证两个下拉框始终平分。
+    /// </summary>
     private static TableLayoutPanel MakeSelectorCell(string labelText, ComboBox combo, Padding margin)
     {
         var cell = new TableLayoutPanel
         {
             Dock = DockStyle.Fill,
             AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink,
             ColumnCount = 1,
             RowCount = 2,
             Margin = margin,
         };
+        cell.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
         cell.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         cell.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 
@@ -199,6 +204,7 @@ public sealed partial class MainForm
             ForeColor = Color.FromArgb(0x44, 0x44, 0x44),
         };
         combo.Dock = DockStyle.Fill;
+        combo.Margin = new Padding(3, 0, 3, 0);
 
         cell.Controls.Add(label, 0, 0);
         cell.Controls.Add(combo, 0, 1);
