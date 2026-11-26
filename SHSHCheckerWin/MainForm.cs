@@ -79,11 +79,7 @@ public sealed partial class MainForm : Form
         Font = new Font("Microsoft YaHei UI", 9F);
 
         BuildUi();
-#if ENGLISH_LEGACY
-        AcceptButton = _cydiaButton;
-#else
         AcceptButton = _queryButton;
-#endif
 
         _ecidBox.TextChanged += (_, _) => UpdateEcidPreview();
         _modelCombo.SelectedIndexChanged += (_, _) => OnGroupChanged();

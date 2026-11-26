@@ -83,8 +83,8 @@ jobs:
           ## Features
 
           - **Chinese build**: full version — i4 + Cydia query, download, modern ``.shsh2``, SHSH upload to i4
-          - **English build (`-en`)**: legacy 32-bit devices only (A4–A6X, iOS 11 and earlier), Cydia query + download
-            (keeps i4 download path, drops i4 query and SHSH upload; iPhone 5c excluded)
+          - **English build (`-en`)**: legacy 32-bit devices only (A4–A6X), i4 + Cydia query & download
+            (drops 64-bit device filter and SHSH upload)
 
           Both builds save ``.shsh`` / ``.shsh2`` and keep the same device catalog and UI.
 

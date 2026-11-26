@@ -135,10 +135,8 @@ public static class DeviceCatalog
     public static bool IsVariantVisible(DeviceModel model, bool includeArm64, bool includeArm64e)
     {
 #if ENGLISH_LEGACY
-        // 英文精简版：只保留 32-bit（A4–A6X），并排除 iPhone 5c（Cydia 无缓存，容易误用）
-        return model.Tier == DeviceTier.Arm32
-               && !string.Equals(model.ProductType, "iPhone5,3", StringComparison.OrdinalIgnoreCase)
-               && !string.Equals(model.ProductType, "iPhone5,4", StringComparison.OrdinalIgnoreCase);
+        // 英文精简版：保留全部 32-bit 设备（A4–A6X，含 iPhone 5c 以支持爱思查询）
+        return model.Tier == DeviceTier.Arm32;
 #else
         return !DeviceSoc.IsKnown(model.Soc) || IsTierVisible(model.Tier, includeArm64, includeArm64e);
 #endif

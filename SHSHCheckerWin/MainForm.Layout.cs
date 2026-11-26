@@ -42,11 +42,7 @@ public sealed partial class MainForm
 #endif
         Controls.Add(root);
 
-#if ENGLISH_LEGACY
-        SetStatus(Strings.Get("K172"), Color.DimGray);
-#else
         SetStatus(Strings.Get("K065"), Color.DimGray);
-#endif
     }
 
     private Control BuildInputPanel()
@@ -164,11 +160,7 @@ public sealed partial class MainForm
             WrapContents = false,
             Margin = new Padding(0, 6, 0, 0),
         };
-#if !ENGLISH_LEGACY
         buttons.Controls.Add(_queryButton);
-#else
-        _cydiaButton.Margin = new Padding(0, 0, 0, 0);
-#endif
         buttons.Controls.Add(_cydiaButton);
         buttons.Controls.Add(_downloadButton);
         buttons.Controls.Add(_downloadAllButton);

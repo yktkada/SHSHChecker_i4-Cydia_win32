@@ -264,8 +264,8 @@ public sealed class CydiaClient : IDisposable
 
         var plist = raw.Substring(start, end - start + "</plist>".Length).TrimStart();
 
-        // 与 README 承诺一致：必须含「非空」的 APTicket <data>，只有字样不算数
-        if (!HasNonEmptyPlistData(plist, "APTicket"))
+        // iOS 5+ 含 APTicket；iOS 3.x/4.x 无 APTicket，但含 iBEC/iBSS/LLB/KernelCache 等镜像签名
+        if (!HasValidShshTicket(plist))
         {
             return new CydiaDownloadResult
             {
@@ -286,6 +286,17 @@ public sealed class CydiaClient : IDisposable
             Elapsed = sw.Elapsed,
         };
     }
+
+    /// <summary>
+    /// 校验返回的 plist 是否包含有效 SHSH 凭据：
+    /// iOS 5+ 检查非空 APTicket；iOS 3.x / 4.x 检查 iBEC / iBSS / LLB / KernelCache 等签名镜像。
+    /// </summary>
+    public static bool HasValidShshTicket(string plist)
+        => HasNonEmptyPlistData(plist, "APTicket")
+           || HasNonEmptyPlistData(plist, "iBEC")
+           || HasNonEmptyPlistData(plist, "iBSS")
+           || HasNonEmptyPlistData(plist, "LLB")
+           || HasNonEmptyPlistData(plist, "KernelCache");
 
     /// <summary>
     /// 校验 plist 里某个 key 后面紧跟的 &lt;data&gt; 是否有实际内容（Base64 非空），
